@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>About Us - StoryHub</title>
+		<!-- Favicon -->
+		<link rel="icon" type="image/x-icon" href="assets/icons/icon1.png" />
+
+		<!-- Add Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		/>
+
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Custom CSS -->
+		<link href="assets/css/style.css" rel="stylesheet" />
+		<style>
+			/* About page specific styles */
+			body {
+				background-color: #2a3f55;
+				color: white;
+			}
+
+			.about-hero {
+				background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+					url("https://picsum.photos/seed/storyabout/1920/600");
+				background-size: cover;
+				background-position: center;
+				color: white;
+				padding: 150px 0 100px;
+				margin-bottom: 60px;
+				position: relative;
+			}
+
+			.about-hero::after {
+				content: "";
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 100px;
+				background: linear-gradient(to top, #2a3f55, transparent);
+			}
+
+			.about-section {
+				padding: 80px 0;
+				position: relative;
+			}
+
+			.about-section:nth-child(even) {
+				background-color: #1e2d3d;
+			}
+
+			.section-title {
+				color: white;
+				position: relative;
+				display: inline-block;
+				margin-bottom: 30px;
+			}
+
+			.section-title::after {
+				content: "";
+				position: absolute;
+				bottom: -10px;
+				left: 0;
+				width: 80px;
+				height: 3px;
+				background: linear-gradient(to right, #7bb4ff, #a67ffd);
+				border-radius: 3px;
+			}
+
+			.text-center .section-title::after {
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.about-card {
+				background: #1e2d3d;
+				color: white;
+				border-radius: 15px;
+				padding: 30px;
+				height: 100%;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+			}
+
+			.about-card:hover {
+				transform: translateY(-10px);
+				box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+			}
+
+			.about-card i {
+				font-size: 2.5rem;
+				margin-bottom: 20px;
+				background: linear-gradient(to right, #7bb4ff, #a67ffd);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.lead {
+				color: rgba(255, 255, 255, 0.9);
+			}
+
+			p {
+				color: rgba(255, 255, 255, 0.8);
+				line-height: 1.7;
+			}
+
+			.team-member {
+				text-align: center;
+				margin-bottom: 30px;
+				background: #1e2d3d;
+				border-radius: 15px;
+				padding: 30px 15px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+				transition: transform 0.3s ease;
+			}
+
+			.team-member:hover {
+				transform: translateY(-10px);
+			}
+
+			.team-member img {
+				width: 150px;
+				height: 150px;
+				border-radius: 50%;
+				object-fit: cover;
+				border: 5px solid #2a3f55;
+				margin-bottom: 20px;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+			}
+
+			.team-member h4 {
+				margin-bottom: 5px;
+				color: white;
+			}
+
+			.team-member .position {
+				color: rgba(255, 255, 255, 0.7);
+				font-style: italic;
+				margin-bottom: 15px;
+			}
+
+			.social-links a {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 36px;
+				height: 36px;
+				border-radius: 50%;
+				background: rgba(255, 255, 255, 0.1);
+				color: white;
+				margin: 0 5px;
+				transition: all 0.3s ease;
+			}
+
+			.social-links a:hover {
+				background: linear-gradient(to right, #7bb4ff, #a67ffd);
+				transform: translateY(-3px);
+			}
+
+			.stats-counter {
+				background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+					url("https://picsum.photos/seed/storystats/1920/600");
+				background-size: cover;
+				background-position: center;
+				padding: 80px 0;
+				color: white;
+				position: relative;
+			}
+
+			.counter-item {
+				text-align: center;
+				padding: 20px;
+			}
+
+			.counter-value {
+				font-size: 3rem;
+				font-weight: 700;
+				margin-bottom: 10px;
+				background: linear-gradient(to right, #7bb4ff, #a67ffd);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.counter-label {
+				font-size: 1.2rem;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				color: rgba(255, 255, 255, 0.9);
+			}
+
+			.timeline {
+				position: relative;
+				padding: 60px 0;
+			}
+
+			.timeline::before {
+				content: "";
+				position: absolute;
+				width: 4px;
+				background: linear-gradient(to bottom, #7bb4ff, #a67ffd);
+				top: 0;
+				bottom: 0;
+				left: 50%;
+				margin-left: -2px;
+			}
+
+			.timeline-item {
+				margin-bottom: 60px;
+				position: relative;
+			}
+
+			.timeline-content {
+				padding: 20px 30px;
+				background: #1e2d3d;
+				border-radius: 10px;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+				width: 45%;
+				position: relative;
+				color: white;
+			}
+
+			.timeline-item:nth-child(odd) .timeline-content {
+				float: right;
+			}
+
+			.timeline-item:nth-child(even) .timeline-content {
+				float: left;
+			}
+
+			.timeline-date {
+				display: inline-block;
+				padding: 8px 15px;
+				background: linear-gradient(to right, #7bb4ff, #a67ffd);
+				color: white;
+				border-radius: 5px;
+				position: absolute;
+				top: -20px;
+				right: 15px;
+				font-weight: bold;
+			}
+
+			.timeline-item:nth-child(even) .timeline-date {
+				right: auto;
+				left: 15px;
+			}
+
+			.timeline-item::after {
+				content: "";
+				display: table;
+				clear: both;
+			}
+
+			.timeline-item::before {
+				content: "";
+				position: absolute;
+				width: 25px;
+				height: 25px;
+				background: linear-gradient(to right, #7bb4ff, #a67ffd);
+				border-radius: 50%;
+				top: 22px;
+				left: 50%;
+				margin-left: -12px;
+				z-index: 1;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+			}
+
+			@media (max-width: 767px) {
+				.timeline::before {
+					left: 40px;
+				}
+
+				.timeline-content {
+					width: calc(100% - 90px);
+					float: right;
+				}
+
+				.timeline-item:nth-child(even) .timeline-content {
+					float: right;
+				}
+
+				.timeline-item:nth-child(odd) .timeline-date,
+				.timeline-item:nth-child(even) .timeline-date {
+					right: auto;
+					left: 15px;
+				}
+
+				.timeline-item::before {
+					left: 40px;
+					margin-left: 0;
+				}
+			}
+
+			.cta-section {
+				background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+					url("https://picsum.photos/seed/storycta/1920/600");
+				background-size: cover;
+				background-position: center;
+				color: white;
+				padding: 80px 0;
+				text-align: center;
+				position: relative;
+			}
+
+			.cta-section::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(135deg, rgba(42, 63, 85, 0.9), rgba(30, 45, 61, 0.9));
+			}
+
+			.cta-section .container {
+				position: relative;
+				z-index: 1;
+			}
+
+			.cta-btn {
+				display: inline-block;
+				background: linear-gradient(to right, #7bb4ff, #a67ffd);
+				color: white;
+				font-weight: 600;
+				padding: 15px 40px;
+				border-radius: 50px;
+				margin-top: 30px;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+				transition: all 0.3s ease;
+				border: none;
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+			}
+
+			.cta-btn:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+				color: white;
+			}
+
+			/* Scroll margin for section links */
+			section {
+				scroll-margin-top: 80px;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand d-flex align-items-center" href="index.html">
+					<div class="logo-container me-2">
+						<div class="book-logo">
+							<span class="book-page"></span>
+							<span class="book-page"></span>
+							<span class="book-page"></span>
+						</div>
+					</div>
+					<span class="brand-text">StoryHub</span>
+				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNav"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="index.html">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="about.html">About Us</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#top-books">Top Books</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#rankings">Rankings</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#authors">Authors</a>
+						</li>
+					</ul>
+					<div class="nav-auth-buttons">
+						<button
+							class="btn btn-signin me-2"
+							data-bs-toggle="modal"
+							data-bs-target="#signinModal"
+						>
+							Sign In
+						</button>
+						<button class="btn btn-signup" data-bs-toggle="modal" data-bs-target="#signupModal">
+							Sign Up
+						</button>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Hero Section -->
+		<section class="about-hero">
+			<div class="container text-center">
+				<h1 class="display-4 fw-bold mb-4">About StoryHub</h1>
+				<p class="lead mb-5">
+					Connecting readers and authors through the power of storytelling since 2015
+				</p>
+			</div>
+		</section>
+
+		<!-- Our Mission Section -->
+		<section class="about-section">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-6 mb-4 mb-lg-0">
+						<img
+							src="https://picsum.photos/seed/ourmission/600/400"
+							alt="Our Mission"
+							class="img-fluid rounded-3 shadow"
+						/>
+					</div>
+					<div class="col-lg-6">
+						<h2 class="mb-4">Our Mission</h2>
+						<p class="lead mb-4">
+							To create a vibrant community where storytellers and readers can connect, share, and
+							explore amazing worlds together.
+						</p>
+						<p>
+							At StoryHub, we believe in the transformative power of stories. Our mission is to
+							provide a platform where writers can showcase their creativity and readers can
+							discover captivating narratives that resonate with them. We strive to make reading
+							accessible, engaging, and enjoyable for everyone.
+						</p>
+						<p>
+							By fostering a supportive environment for both established and emerging authors, we
+							aim to contribute to the rich tapestry of literary expression while building bridges
+							between diverse perspectives and experiences.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- What We Offer Section -->
+		<section class="about-section bg-light">
+			<div class="container">
+				<h2 class="text-center mb-5">What We Offer</h2>
+				<div class="row">
+					<div class="col-md-4 mb-4">
+						<div class="about-card">
+							<i class="fas fa-book-open"></i>
+							<h3 class="mb-3">Diverse Library</h3>
+							<p>
+								Access to thousands of stories across multiple genres, from fantasy and romance to
+								mystery and sci-fi. Our curated collection ensures quality content for all reading
+								preferences.
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4 mb-4">
+						<div class="about-card">
+							<i class="fas fa-users"></i>
+							<h3 class="mb-3">Vibrant Community</h3>
+							<p>
+								Join discussions, share reviews, and connect with fellow readers and authors who
+								share your passion for storytelling. Build relationships with like-minded literature
+								enthusiasts.
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4 mb-4">
+						<div class="about-card">
+							<i class="fas fa-laptop-code"></i>
+							<h3 class="mb-3">Publishing Platform</h3>
+							<p>
+								For writers, we provide an intuitive platform to publish, share, and receive
+								feedback on your work. Gain visibility and build your audience with our
+								author-friendly tools.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Our Journey Timeline -->
+		<section class="about-section">
+			<div class="container">
+				<h2 class="text-center mb-5">Our Journey</h2>
+				<div class="timeline">
+					<div class="timeline-item">
+						<div class="timeline-content">
+							<span class="timeline-date">2015</span>
+							<h3>The Beginning</h3>
+							<p>
+								StoryHub was founded by a group of passionate readers and writers who wanted to
+								create a platform where stories could be shared freely.
+							</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<div class="timeline-content">
+							<span class="timeline-date">2017</span>
+							<h3>Growing Community</h3>
+							<p>
+								Reached our first milestone of 10,000 registered users and 5,000 published stories
+								across various genres.
+							</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<div class="timeline-content">
+							<span class="timeline-date">2019</span>
+							<h3>Platform Expansion</h3>
+							<p>
+								Launched mobile apps for iOS and Android, making our stories accessible on-the-go
+								for millions of readers worldwide.
+							</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<div class="timeline-content">
+							<span class="timeline-date">2021</span>
+							<h3>Author Support Programs</h3>
+							<p>
+								Introduced mentorship programs, writing workshops, and monetization options to
+								support emerging authors on their creative journey.
+							</p>
+						</div>
+					</div>
+					<div class="timeline-item">
+						<div class="timeline-content">
+							<span class="timeline-date">2023</span>
+							<h3>Global Reach</h3>
+							<p>
+								Expanded our platform to support multiple languages and partnered with publishers to
+								bring exceptional indie stories to mainstream audiences.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Stats Counter Section -->
+		<section class="stats-counter">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 col-6">
+						<div class="counter-item">
+							<div class="counter-value">10K+</div>
+							<div class="counter-label">Stories</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-6">
+						<div class="counter-item">
+							<div class="counter-value">50K+</div>
+							<div class="counter-label">Users</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-6">
+						<div class="counter-item">
+							<div class="counter-value">2K+</div>
+							<div class="counter-label">Authors</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-6">
+						<div class="counter-item">
+							<div class="counter-value">1M+</div>
+							<div class="counter-label">Monthly Reads</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Our Team Section -->
+		<section class="about-section">
+			<div class="container">
+				<h2 class="text-center mb-5">Meet Our Team</h2>
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+						<div class="team-member">
+							<img src="https://picsum.photos/seed/ceo/400/400" alt="Emily Chen" />
+							<h4>Emily Chen</h4>
+							<p class="position">Founder & CEO</p>
+							<div class="social-links">
+								<a href="#"><i class="fab fa-twitter"></i></a>
+								<a href="#"><i class="fab fa-linkedin-in"></i></a>
+								<a href="#"><i class="fab fa-instagram"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="team-member">
+							<img src="https://picsum.photos/seed/cto/400/400" alt="Michael Rodriguez" />
+							<h4>Michael Rodriguez</h4>
+							<p class="position">CTO</p>
+							<div class="social-links">
+								<a href="#"><i class="fab fa-twitter"></i></a>
+								<a href="#"><i class="fab fa-linkedin-in"></i></a>
+								<a href="#"><i class="fab fa-github"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="team-member">
+							<img src="https://picsum.photos/seed/design/400/400" alt="Sarah Johnson" />
+							<h4>Sarah Johnson</h4>
+							<p class="position">Creative Director</p>
+							<div class="social-links">
+								<a href="#"><i class="fab fa-twitter"></i></a>
+								<a href="#"><i class="fab fa-linkedin-in"></i></a>
+								<a href="#"><i class="fab fa-dribbble"></i></a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-6">
+						<div class="team-member">
+							<img src="https://picsum.photos/seed/community/400/400" alt="David Park" />
+							<h4>David Park</h4>
+							<p class="position">Community Manager</p>
+							<div class="social-links">
+								<a href="#"><i class="fab fa-twitter"></i></a>
+								<a href="#"><i class="fab fa-linkedin-in"></i></a>
+								<a href="#"><i class="fab fa-instagram"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Call to Action Section -->
+		<section class="cta-section">
+			<div class="container">
+				<h2 class="mb-4">Ready to Join Our Community?</h2>
+				<p class="lead mb-4">
+					Discover amazing stories or share your own creativity with readers around the world
+				</p>
+				<a href="#" class="cta-btn" data-bs-toggle="modal" data-bs-target="#signupModal"
+					>Start Your Journey</a
+				>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer class="footer-section">
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<!-- About Column -->
+						<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+							<div class="footer-logo d-flex align-items-center mb-3">
+								<div class="logo-container me-2">
+									<div class="book-logo">
+										<span class="book-page"></span>
+										<span class="book-page"></span>
+										<span class="book-page"></span>
+									</div>
+								</div>
+								<span class="brand-text">StoryHub</span>
+							</div>
+							<p class="footer-about">
+								Discover thousands of amazing stories that will take you on incredible journeys.
+								Join our community of passionate readers today.
+							</p>
+							<div class="social-links">
+								<a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+							</div>
+						</div>
+
+						<!-- Quick Links -->
+						<div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+							<h4 class="footer-title">Quick Links</h4>
+							<ul class="footer-links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="about.html">About Us</a></li>
+								<li><a href="index.html#top-books">Top Books</a></li>
+								<li><a href="index.html#rankings">Rankings</a></li>
+								<li><a href="index.html#authors">Authors</a></li>
+							</ul>
+						</div>
+
+						<!-- Help & Support -->
+						<div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+							<h4 class="footer-title">Support</h4>
+							<ul class="footer-links">
+								<li><a href="#">Help Center</a></li>
+								<li><a href="#">Terms of Service</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="#">FAQ</a></li>
+								<li><a href="#">Contact Us</a></li>
+							</ul>
+						</div>
+
+						<!-- Newsletter -->
+						<div class="col-lg-4 col-md-6">
+							<h4 class="footer-title">Newsletter</h4>
+							<p class="newsletter-text">Subscribe to our newsletter and get the latest updates.</p>
+							<form class="newsletter-form">
+								<div class="input-group">
+									<input type="email" class="form-control" placeholder="Your email address" />
+									<button class="btn btn-subscribe" type="submit">
+										<i class="fas fa-paper-plane"></i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Copyright Section -->
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="col-md-6">
+							<p class="copyright">
+								© <span id="currentYear"></span> StoryHub. All rights reserved.
+							</p>
+						</div>
+						<div class="col-md-6">
+							<ul class="footer-bottom-links">
+								<li><a href="#">Privacy</a></li>
+								<li><a href="#">Terms</a></li>
+								<li><a href="#">Cookies</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- Sign In Modal -->
+		<div class="modal fade" id="signinModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0">
+						<h5 class="modal-title">Welcome Back!</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<!-- Add your sign in form here -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Sign Up Modal -->
+		<div class="modal fade" id="signupModal" tabindex="-1">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0">
+						<h5 class="modal-title">Create Account</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<!-- Add your sign up form here -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Bootstrap JS and dependencies -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+		<script>
+			// Set current year in footer
+			document.getElementById("currentYear").textContent = new Date().getFullYear();
+		</script>
+	</body>
+</html>
