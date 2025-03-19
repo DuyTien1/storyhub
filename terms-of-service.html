@@ -19,224 +19,7 @@
 		/>
 		<!-- Custom CSS -->
 		<link href="assets/css/style.css" rel="stylesheet" />
-		<style>
-			/* Terms of Service specific styles */
-			body {
-				background-color: #1e2d3d;
-				color: white;
-			}
-
-			.about-hero {
-				padding-top: 100px;
-			}
-
-			.about-header {
-				background: linear-gradient(135deg, #2a3f55 0%, #1e2d3d 100%);
-				padding: 60px 0;
-				margin-bottom: 50px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-				position: relative;
-			}
-
-			.about-header::before {
-				content: "";
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-				z-index: 0;
-			}
-
-			.about-header .container {
-				position: relative;
-				z-index: 1;
-			}
-
-			.tos-content {
-				padding-bottom: 80px;
-			}
-
-			.last-updated {
-				display: inline-block;
-				background: rgba(255, 255, 255, 0.1);
-				padding: 5px 15px;
-				border-radius: 20px;
-				margin-top: 10px;
-				font-size: 0.9rem;
-			}
-
-			.effective-date {
-				font-style: italic;
-				color: rgba(255, 255, 255, 0.7);
-				margin-bottom: 40px;
-				font-size: 1.1rem;
-			}
-
-			.tos-section {
-				margin-bottom: 40px;
-				padding-bottom: 20px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			}
-
-			.tos-section:last-child {
-				border-bottom: none;
-			}
-
-			.tos-section h2 {
-				color: white;
-				margin-bottom: 25px;
-				position: relative;
-				padding-bottom: 15px;
-			}
-
-			.tos-section h2::after {
-				content: "";
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				width: 60px;
-				height: 3px;
-				background: linear-gradient(to right, #7bb4ff, #a67ffd);
-				border-radius: 3px;
-			}
-
-			.tos-section h3 {
-				color: white;
-				margin: 30px 0 15px;
-				font-size: 1.4rem;
-			}
-
-			.tos-section p,
-			.tos-section li {
-				color: rgba(255, 255, 255, 0.8);
-				line-height: 1.8;
-				margin-bottom: 15px;
-			}
-
-			.tos-section ul,
-			.tos-section ol {
-				padding-left: 20px;
-				margin-bottom: 25px;
-			}
-
-			.tos-section li {
-				margin-bottom: 10px;
-			}
-
-			.table-of-contents {
-				background: #1e2d3d;
-				padding: 30px;
-				border-radius: 15px;
-				margin-bottom: 40px;
-				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-			}
-
-			.table-of-contents h3 {
-				margin-top: 0;
-				margin-bottom: 20px;
-				padding-bottom: 15px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-			}
-
-			.table-of-contents ol {
-				padding-left: 20px;
-				counter-reset: item;
-				list-style-type: none;
-			}
-
-			.table-of-contents li {
-				position: relative;
-				margin-bottom: 12px;
-				counter-increment: item;
-			}
-
-			.table-of-contents li::before {
-				content: counter(item) ".";
-				position: absolute;
-				left: -20px;
-				color: #7bb4ff;
-				font-weight: bold;
-			}
-
-			.table-of-contents a {
-				color: rgba(255, 255, 255, 0.8);
-				text-decoration: none;
-				transition: all 0.3s ease;
-			}
-
-			.table-of-contents a:hover {
-				color: #7bb4ff;
-				padding-left: 5px;
-			}
-
-			.back-to-top {
-				display: inline-block;
-				background: linear-gradient(to right, #7bb4ff, #a67ffd);
-				color: white;
-				padding: 10px 20px;
-				border-radius: 50px;
-				text-decoration: none;
-				margin: 20px 0;
-				font-weight: 600;
-				transition: all 0.3s ease;
-			}
-
-			.back-to-top:hover {
-				transform: translateY(-3px);
-				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-				color: white;
-			}
-
-			.back-to-top i {
-				margin-right: 5px;
-			}
-
-			.tos-footer {
-				background: #1e2d3d;
-				padding: 40px 0;
-				margin-top: 60px;
-				text-align: center;
-			}
-
-			.tos-footer p {
-				color: rgba(255, 255, 255, 0.7);
-				margin-bottom: 20px;
-			}
-
-			.tos-footer .contact-link {
-				color: #7bb4ff;
-				text-decoration: none;
-				font-weight: 600;
-				transition: all 0.3s ease;
-			}
-
-			.tos-footer .contact-link:hover {
-				color: #a67ffd;
-			}
-
-			.additional-policies {
-				display: flex;
-				justify-content: center;
-				gap: 30px;
-				margin-top: 25px;
-			}
-
-			.additional-policies a {
-				color: rgba(255, 255, 255, 0.8);
-				text-decoration: none;
-				transition: all 0.3s ease;
-			}
-
-			.additional-policies a:hover {
-				color: #7bb4ff;
-			}
-
-			strong {
-				color: white;
-			}
-		</style>
+		<link rel="stylesheet" href="assets/css/term-of-service.css" />
 	</head>
 	<body>
 		<!-- Navigation -->
@@ -298,12 +81,20 @@
 		</nav>
 
 		<!-- Terms of Service Hero Section -->
-		<section class="about-hero">
-			<div class="about-header">
-				<div class="container text-center">
-					<h1 class="mb-3">Terms of Service</h1>
-					<p class="lead mb-2">Please read these terms carefully before using StoryHub</p>
-					<span class="last-updated">Last Updated: June 15, 2023</span>
+		<section class="tos-hero">
+			<div class="tos-header">
+				<div class="container">
+					<div class="tos-content">
+						<h1>Terms of Service</h1>
+						<p>
+							Please read these Terms of Service carefully before using our website, mobile
+							applications, or any other platform or service provided by StoryHub.
+						</p>
+					</div>
+				</div>
+				<div class="scroll-down">
+					<div class="mouse"></div>
+					<span>Scroll Down</span>
 				</div>
 			</div>
 		</section>
@@ -743,22 +534,6 @@
 					<a href="#toc" class="back-to-top"
 						><i class="fas fa-arrow-up"></i> Back to Table of Contents</a
 					>
-				</div>
-			</div>
-		</section>
-
-		<!-- Terms of Service Footer -->
-		<section class="tos-footer">
-			<div class="container">
-				<p>
-					If you have any questions about our Terms of Service, please
-					<a href="help-center.html" class="contact-link">contact us</a>.
-				</p>
-				<div class="additional-policies">
-					<a href="#">Privacy Policy</a>
-					<a href="#">Cookie Policy</a>
-					<a href="#">Community Guidelines</a>
-					<a href="#">Copyright Policy</a>
 				</div>
 			</div>
 		</section>
