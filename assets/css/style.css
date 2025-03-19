@@ -13,7 +13,7 @@ body {
 }
 
 :root {
-	--primary-color: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+	--primary-color: linear-gradient(to right, #7bb4ff, #a67ffd);
 }
 
 /* scrollbar */
@@ -694,7 +694,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .book-page:nth-child(2) {
-	background: linear-gradient(120deg, #8fd3f4 0%, #84fab0 100%);
+	background: var(--primary-color);
 	z-index: 2;
 	animation: page2 3s ease-in-out infinite;
 }
@@ -807,7 +807,7 @@ body::-webkit-scrollbar-thumb {
 	font-weight: 700;
 	margin-bottom: 50px;
 	text-align: center;
-	background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+	background: var(--primary-color);
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
@@ -1195,12 +1195,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .updated-stories-list::-webkit-scrollbar-thumb {
-	background: rgba(132, 250, 176, 0.5);
+	background: rgb(123, 180, 255, 0.5);
 	border-radius: 3px;
 }
 
 .updated-stories-list::-webkit-scrollbar-thumb:hover {
-	background: rgba(132, 250, 176, 0.7);
+	background: rgb(123, 180, 255, 0.5);
 }
 
 .story-update-item {
@@ -1337,7 +1337,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .list-title i {
-	color: #84fab0;
+	color: #7bb4ff;
 }
 
 .stories-list {
@@ -1357,11 +1357,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .story-item:hover {
-	background: linear-gradient(
-		120deg,
-		rgba(132, 250, 176, 0.1),
-		rgba(143, 211, 244, 0.1)
-	) !important;
+	background: linear-gradient(120deg, rgba(98, 87, 255, 0.1), rgba(143, 211, 244, 0.1)) !important;
 	/* transform: translateX(5px); */
 }
 
@@ -1377,7 +1373,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .update-badge {
-	background: linear-gradient(120deg, #84fab0, #8fd3f4);
+	background: var(--primary-color);
 	color: #fff;
 	padding: 3px 10px;
 	border-radius: 12px;
@@ -1433,7 +1429,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .stats i {
-	color: #84fab0;
+	color: #7bb4ff;
 }
 
 /* Scrollbar Styles */
@@ -1447,12 +1443,12 @@ body::-webkit-scrollbar-thumb {
 }
 
 .stories-list::-webkit-scrollbar-thumb {
-	background: rgba(132, 250, 176, 0.5);
+	background: rgb(123, 180, 255, 0.7);
 	border-radius: 3px;
 }
 
 .stories-list::-webkit-scrollbar-thumb:hover {
-	background: rgba(132, 250, 176, 0.7);
+	background: rgb(123, 180, 255, 0.5);
 }
 
 /* Responsive Styles */
@@ -1550,7 +1546,7 @@ body::-webkit-scrollbar-thumb {
 
 .category-item i {
 	width: 24px;
-	color: #84fab0;
+	color: #7bb4ff;
 }
 
 .category-item span {
@@ -1623,7 +1619,7 @@ body::-webkit-scrollbar-thumb {
 .filter-btn.active,
 .view-btn:hover,
 .view-btn.active {
-	background: linear-gradient(120deg, #84fab0, #8fd3f4);
+	background: var(--primary-color);
 	color: #fff;
 }
 
@@ -1754,9 +1750,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .book-status.ongoing {
-	background: rgba(76, 175, 80, 0.2);
-	color: #98ffa0;
-	border: 1px solid rgba(76, 175, 80, 0.3);
+	background: rgba(151, 137, 255, 0.2);
+	border: 1px solid rgba(91, 54, 255, 0.3);
 }
 
 .book-status.completed {
@@ -1844,7 +1839,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .genre {
-	color: rgba(132, 250, 176, 0.8);
+	color: #7bb4ff;
 	background: rgba(132, 250, 176, 0.1);
 	padding: 2px 6px;
 	border-radius: 8px;
@@ -2024,7 +2019,7 @@ body::-webkit-scrollbar-thumb {
 	padding: 5px 12px;
 	border-radius: 20px;
 	text-transform: uppercase;
-	color: #fff;
+	color: #fff !important;
 }
 
 .book-status.hot {
@@ -2032,7 +2027,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .book-status.completed {
-	background-color: #20bf6b;
+	background-color: #7bb4ff;
 }
 
 .book-status.new-release {

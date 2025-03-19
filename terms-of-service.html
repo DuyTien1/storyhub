@@ -22,33 +22,49 @@
 		<style>
 			/* Terms of Service specific styles */
 			body {
-				background-color: #2a3f55;
+				background-color: #1e2d3d;
 				color: white;
 			}
 
-			.tos-hero {
-				background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-					url("https://picsum.photos/seed/legal/1920/600");
-				background-size: cover;
-				background-position: center;
-				color: white;
-				padding: 150px 0 100px;
-				margin-bottom: 60px;
+			.about-hero {
+				padding-top: 100px;
+			}
+
+			.about-header {
+				background: linear-gradient(135deg, #2a3f55 0%, #1e2d3d 100%);
+				padding: 60px 0;
+				margin-bottom: 50px;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 				position: relative;
 			}
 
-			.tos-hero::after {
+			.about-header::before {
 				content: "";
 				position: absolute;
-				bottom: 0;
+				top: 0;
 				left: 0;
-				width: 100%;
-				height: 100px;
-				background: linear-gradient(to top, #2a3f55, transparent);
+				right: 0;
+				bottom: 0;
+				background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+				z-index: 0;
+			}
+
+			.about-header .container {
+				position: relative;
+				z-index: 1;
 			}
 
 			.tos-content {
 				padding-bottom: 80px;
+			}
+
+			.last-updated {
+				display: inline-block;
+				background: rgba(255, 255, 255, 0.1);
+				padding: 5px 15px;
+				border-radius: 20px;
+				margin-top: 10px;
+				font-size: 0.9rem;
 			}
 
 			.effective-date {
@@ -282,18 +298,19 @@
 		</nav>
 
 		<!-- Terms of Service Hero Section -->
-		<section class="tos-hero">
-			<div class="container text-center">
-				<h1 class="display-4 fw-bold mb-4">Terms of Service</h1>
-				<p class="lead mb-0">Please read these terms carefully before using StoryHub</p>
+		<section class="about-hero">
+			<div class="about-header">
+				<div class="container text-center">
+					<h1 class="mb-3">Terms of Service</h1>
+					<p class="lead mb-2">Please read these terms carefully before using StoryHub</p>
+					<span class="last-updated">Last Updated: June 15, 2023</span>
+				</div>
 			</div>
 		</section>
 
 		<!-- Terms of Service Content -->
 		<section class="tos-content">
 			<div class="container">
-				<p class="effective-date">Last Updated: June 15, 2023</p>
-
 				<!-- Table of Contents -->
 				<div class="table-of-contents" id="toc">
 					<h3>Table of Contents</h3>
@@ -779,11 +796,11 @@
 						<div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
 							<h4 class="footer-title">Quick Links</h4>
 							<ul class="footer-links">
-								<li><a href="index.html">Home</a></li>
+								<li><a href="#hero">Home</a></li>
 								<li><a href="about.html">About Us</a></li>
-								<li><a href="index.html#top-books">Top Books</a></li>
-								<li><a href="index.html#rankings">Rankings</a></li>
-								<li><a href="index.html#authors">Authors</a></li>
+								<li><a href="#top-books">Categories</a></li>
+								<li><a href="#rankings">Featured Stories</a></li>
+								<li><a href="#authors">Authors</a></li>
 							</ul>
 						</div>
 
@@ -793,9 +810,9 @@
 							<ul class="footer-links">
 								<li><a href="help-center.html">Help Center</a></li>
 								<li><a href="terms-of-service.html">Terms of Service</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">FAQ</a></li>
-								<li><a href="#">Contact Us</a></li>
+								<li><a href="privacy-policy.html">Privacy Policy</a></li>
+								<li><a href="faqs.html">FAQ</a></li>
+								<li><a href="contact-us.html">Contact Us</a></li>
 							</ul>
 						</div>
 
@@ -820,17 +837,10 @@
 			<div class="footer-bottom">
 				<div class="container">
 					<div class="row align-items-center">
-						<div class="col-md-6">
+						<div class="text-center">
 							<p class="copyright">
 								© <span id="currentYear"></span> StoryHub. All rights reserved.
 							</p>
-						</div>
-						<div class="col-md-6">
-							<ul class="footer-bottom-links">
-								<li><a href="#">Privacy</a></li>
-								<li><a href="terms-of-service.html">Terms</a></li>
-								<li><a href="#">Cookies</a></li>
-							</ul>
 						</div>
 					</div>
 				</div>
