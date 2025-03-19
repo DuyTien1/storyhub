@@ -39,7 +39,7 @@ body::-webkit-scrollbar-thumb {
 	margin-left: calc(-50vw + 50%);
 	margin-right: calc(-50vw + 50%);
 	position: relative;
-	background: url("/assets/images/background.jpg") center/cover;
+	background: url("../images/background.jpg") center/cover;
 	color: white;
 	display: flex;
 	align-items: center;
@@ -790,9 +790,6 @@ body::-webkit-scrollbar-thumb {
 	color: #fff;
 }
 
-.accordion-body {
-}
-
 /* Rankings Section Styles */
 .rankings-section {
 	padding: 80px 0;
@@ -813,7 +810,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .ranking-card {
-	background: #2a3f55; /* Dark blue background for the entire card */
+	background: rgba(42, 63, 85, 0.5); /* Dark blue background for the entire card */
 	border-radius: 12px;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 	overflow: hidden;
@@ -1540,7 +1537,7 @@ body::-webkit-scrollbar-thumb {
 
 .category-item:hover,
 .category-item.active {
-	background: linear-gradient(120deg, rgba(132, 250, 176, 0.1), rgba(143, 211, 244, 0.1));
+	background: linear-gradient(120deg, rgba(98, 87, 255, 0.1), rgba(143, 211, 244, 0.1)) !important;
 	color: #fff;
 }
 
@@ -1637,8 +1634,8 @@ body::-webkit-scrollbar-thumb {
 }
 
 .filter-tag {
-	background: rgba(132, 250, 176, 0.1);
-	color: #84fab0;
+	background: rgba(146, 132, 250, 0.1);
+	color: #7bb4ff;
 	padding: 5px 12px;
 	border-radius: 20px;
 	font-size: 0.9rem;
@@ -1840,7 +1837,7 @@ body::-webkit-scrollbar-thumb {
 
 .genre {
 	color: #7bb4ff;
-	background: rgba(132, 250, 176, 0.1);
+	background: rgba(146, 132, 250, 0.1);
 	padding: 2px 6px;
 	border-radius: 8px;
 	font-size: 0.7rem;
