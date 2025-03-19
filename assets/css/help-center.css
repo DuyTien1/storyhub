@@ -219,54 +219,6 @@ body {
 	color: #a67ffd;
 }
 
-.faq-section {
-	background: #1e2d3d;
-	padding: 80px 0;
-	margin: 60px 0;
-}
-
-.accordion-item {
-	background-color: #2a3f55;
-	border: none;
-	margin-bottom: 15px;
-	border-radius: 15px;
-	overflow: hidden;
-}
-
-.accordion-button {
-	background-color: #2a3f55;
-	color: white;
-	font-weight: 600;
-	padding: 20px 30px;
-	box-shadow: none;
-}
-
-.accordion-button:not(.collapsed) {
-	background-color: #2a3f55;
-	color: white;
-	box-shadow: none;
-}
-
-.accordion-button:focus {
-	border-color: transparent;
-	box-shadow: none;
-}
-
-.accordion-button::after {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-}
-
-.accordion-button:not(.collapsed)::after {
-	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-}
-
-.accordion-body {
-	background-color: #2a3f55;
-	color: rgba(255, 255, 255, 0.8);
-	padding: 0 30px 20px;
-	line-height: 1.7;
-}
-
 .help-contact {
 	padding: 60px 0;
 }
