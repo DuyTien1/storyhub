@@ -1871,6 +1871,24 @@ body::-webkit-scrollbar-thumb {
 }
 
 @media (max-width: 768px) {
+	.filter-group {
+		justify-content: flex-start;
+		flex-wrap: wrap;
+		gap: 10px;
+	}
+
+	.top-books-slider-section {
+		display: none;
+	}
+
+	.hero-stats {
+		display: none;
+	}
+
+	.scroll-indicator {
+		display: none;
+	}
+
 	.books-grid {
 		grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
 		gap: 15px;
