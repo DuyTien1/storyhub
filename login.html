@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Đăng Nhập & Đăng Ký</title>
+		<link rel="stylesheet" href="assets/css/login.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="form-container">
+				<div class="tabs">
+					<button class="tab active" data-target="signin-form">Đăng Nhập</button>
+					<button class="tab" data-target="signup-form">Đăng Ký</button>
+				</div>
+				<form id="signin-form" class="active-form">
+					<h2>Chào Mừng Trở Lại</h2>
+					<div class="input-group">
+						<input type="text" placeholder="Tên Người Dùng" required />
+					</div>
+					<div class="input-group">
+						<input type="password" placeholder="Mật Khẩu" required />
+					</div>
+					<button type="submit">Đăng Nhập</button>
+					<p class="form-footer">Quên mật khẩu?</p>
+				</form>
+				<form id="signup-form">
+					<h2>Tạo Tài Khoản</h2>
+					<div class="input-group">
+						<input type="text" placeholder="Họ và Tên" required />
+					</div>
+					<div class="input-group">
+						<input type="email" placeholder="Email" required />
+					</div>
+					<div class="input-group">
+						<input type="password" placeholder="Mật Khẩu" required />
+					</div>
+					<button type="submit">Đăng Ký</button>
+					<p class="form-footer">
+						Bằng cách đăng ký, bạn đồng ý với Điều Khoản và Điều Kiện của chúng tôi
+					</p>
+				</form>
+			</div>
+		</div>
+
+		<script>
+			document.querySelectorAll(".tab").forEach((tab) => {
+				tab.addEventListener("click", () => {
+					// Xóa lớp active khỏi tất cả các tab
+					document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+					// Thêm lớp active vào tab được nhấp
+					tab.classList.add("active");
+
+					// Ẩn tất cả các form
+					document.querySelectorAll("form").forEach((form) => form.classList.remove("active-form"));
+					// Hiển thị form tương ứng với tab được nhấp
+					document.getElementById(tab.dataset.target).classList.add("active-form");
+				});
+			});
+		</script>
+	</body>
+</html>
