@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Bệnh Nhân Im Lặng - StoryHub</title>
+		<!-- Favicon -->
+		<link rel="icon" type="image/x-icon" href="assets/icons/icon1.png" />
+		<!-- Add Font Awesome -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<!-- Custom CSS -->
+		<link href="assets/css/style.css" rel="stylesheet" />
+		<style>
+			:root {
+				--dark-blue: #0c1a2d;
+				--medium-blue: #1a2c4e;
+				--light-blue: #2e4272;
+				--accent-blue: #4f74c8;
+				--text-light: #e6e6e6;
+				--gold: #ffc107;
+			}
+
+			body {
+				background-color: var(--dark-blue);
+				color: var(--text-light);
+			}
+
+			/* Book Header Styles */
+			.book-header {
+				background: linear-gradient(to bottom, var(--medium-blue), var(--dark-blue));
+				padding: 8rem 0 4rem;
+				margin-bottom: 2rem;
+			}
+
+			.book-cover-wrapper {
+				position: relative;
+				max-width: 300px;
+				margin: 0 auto;
+			}
+
+			.book-cover {
+				width: 100%;
+				border-radius: 12px;
+				box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+				transition: transform 0.3s ease;
+			}
+
+			.book-cover:hover {
+				transform: translateY(-10px);
+			}
+
+			.book-status {
+				position: absolute;
+				top: 15px;
+				right: -10px;
+				background: #e74c3c;
+				color: white;
+				padding: 8px 20px;
+				border-radius: 20px;
+				font-weight: 600;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+			}
+
+			.book-title {
+				font-size: 2.8rem;
+				font-weight: 700;
+				margin-bottom: 1rem;
+				background: linear-gradient(45deg, #fff, var(--accent-blue));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.book-author {
+				color: var(--text-light);
+				font-size: 1.2rem;
+				margin-bottom: 2rem;
+			}
+
+			.author-link {
+				color: var(--accent-blue);
+				text-decoration: none;
+				transition: color 0.2s;
+			}
+
+			.author-link:hover {
+				color: var(--gold);
+			}
+
+			/* Enhanced Book Stats Animations */
+			.book-stats {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+				gap: 1.5rem;
+				margin-bottom: 2rem;
+			}
+
+			.stat-item {
+				text-align: center;
+				padding: 1.2rem;
+				background: var(--medium-blue);
+				border-radius: 12px;
+				transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+				position: relative;
+				overflow: hidden;
+				border: 2px solid transparent;
+				box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+			}
+
+			.stat-item:before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: linear-gradient(135deg, rgba(79, 116, 200, 0.05) 0%, rgba(79, 116, 200, 0) 50%);
+				opacity: 0;
+				transition: opacity 0.4s ease;
+			}
+
+			.stat-item:hover {
+				transform: translateY(-10px) scale(1.03);
+				border-color: var(--accent-blue);
+				box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2), 0 0 15px rgba(79, 116, 200, 0.3);
+				z-index: 1;
+			}
+
+			.stat-item:hover:before {
+				opacity: 1;
+			}
+
+			.stat-value {
+				font-size: 2rem;
+				font-weight: 700;
+				background: linear-gradient(90deg, var(--accent-blue), #8ab4ff);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				margin-bottom: 0.6rem;
+				position: relative;
+				display: inline-block;
+				transition: all 0.3s ease;
+			}
+
+			.stat-item:hover .stat-value {
+				transform: scale(1.1);
+				background: linear-gradient(90deg, #8ab4ff, var(--accent-blue));
+				-webkit-background-clip: text;
+			}
+
+			.stat-label {
+				color: var(--text-light);
+				font-size: 0.9rem;
+				position: relative;
+				transition: all 0.3s ease;
+			}
+
+			.stat-item:hover .stat-label {
+				color: white;
+			}
+
+			/* Add icons to stats */
+			.stat-item:nth-child(1)::after {
+				content: "\f005";
+				font-family: "Font Awesome 5 Free";
+				font-weight: 900;
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				font-size: 1.5rem;
+				color: rgba(79, 116, 200, 0.2);
+				transition: all 0.3s ease;
+			}
+
+			.stat-item:nth-child(2)::after {
+				content: "\f06e";
+				font-family: "Font Awesome 5 Free";
+				font-weight: 900;
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				font-size: 1.5rem;
+				color: rgba(79, 116, 200, 0.2);
+				transition: all 0.3s ease;
+			}
+
+			.stat-item:nth-child(3)::after {
+				content: "\f02d";
+				font-family: "Font Awesome 5 Free";
+				font-weight: 900;
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				font-size: 1.5rem;
+				color: rgba(79, 116, 200, 0.2);
+				transition: all 0.3s ease;
+			}
+
+			.stat-item:nth-child(4)::after {
+				content: "\f02e";
+				font-family: "Font Awesome 5 Free";
+				font-weight: 900;
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				font-size: 1.5rem;
+				color: rgba(79, 116, 200, 0.2);
+				transition: all 0.3s ease;
+			}
+
+			.stat-item:hover::after {
+				color: rgba(79, 116, 200, 0.4);
+				transform: rotate(10deg) scale(1.2);
+			}
+
+			/* Animation for stats when page loads */
+			@keyframes statsAppear {
+				0% {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				100% {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.book-stats .stat-item {
+				animation: statsAppear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+				opacity: 0;
+			}
+
+			.book-stats .stat-item:nth-child(1) {
+				animation-delay: 0.2s;
+			}
+
+			.book-stats .stat-item:nth-child(2) {
+				animation-delay: 0.3s;
+			}
+
+			.book-stats .stat-item:nth-child(3) {
+				animation-delay: 0.4s;
+			}
+
+			.book-stats .stat-item:nth-child(4) {
+				animation-delay: 0.5s;
+			}
+
+			/* Pulsing animation for the stat value */
+			@keyframes pulse {
+				0% {
+					transform: scale(1);
+				}
+				50% {
+					transform: scale(1.03);
+				}
+				100% {
+					transform: scale(1);
+				}
+			}
+
+			.stat-item:hover .stat-value {
+				animation: pulse 1.5s infinite ease-in-out;
+			}
+
+			/* Action Buttons */
+			.book-actions {
+				display: flex;
+				gap: 1rem;
+				flex-wrap: wrap;
+			}
+
+			.btn-action {
+				padding: 0.8rem 2rem;
+				border-radius: 8px;
+				font-weight: 600;
+				transition: all 0.3s ease;
+			}
+
+			.btn-read {
+				background: var(--accent-blue);
+				color: white;
+				border: none;
+			}
+
+			.btn-read:hover {
+				background: #3c5ea9;
+				transform: translateY(-2px);
+			}
+
+			.btn-bookmark,
+			.btn-share {
+				background: transparent;
+				border: 2px solid var(--accent-blue);
+				color: var(--text-light);
+			}
+
+			.btn-bookmark:hover,
+			.btn-share:hover {
+				background: var(--accent-blue);
+				color: white;
+			}
+
+			/* Content Sections */
+			.content-card {
+				background: var(--medium-blue);
+				border-radius: 12px;
+				padding: 2rem;
+				margin-bottom: 2rem;
+				box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+			}
+
+			.card-title {
+				font-size: 1.5rem;
+				margin-bottom: 1.5rem;
+				padding-bottom: 0.5rem;
+				border-bottom: 2px solid var(--light-blue);
+				color: var(--text-light);
+			}
+
+			/* Responsive Design */
+			@media (max-width: 768px) {
+				.book-header {
+					padding: 6rem 0 3rem;
+				}
+
+				.book-title {
+					font-size: 2rem;
+				}
+
+				.book-actions {
+					flex-direction: column;
+				}
+
+				.btn-action {
+					width: 100%;
+				}
+			}
+
+			/* Comments Section */
+			.comment-form textarea {
+				background: var(--light-blue) !important;
+				border: none;
+				resize: none;
+			}
+
+			.comment-form textarea:focus {
+				box-shadow: none;
+				background: var(--medium-blue) !important;
+			}
+
+			.comment-item,
+			.reply-item {
+				position: relative;
+			}
+
+			.comment-item::before {
+				content: "";
+				position: absolute;
+				left: 25px;
+				top: 60px;
+				bottom: 0;
+				width: 2px;
+				background: var(--light-blue);
+				display: none;
+			}
+
+			.comment-item.has-replies::before {
+				display: block;
+			}
+
+			.replies {
+				margin-left: 30px;
+				padding-left: 20px;
+				border-left: 2px solid var(--light-blue);
+			}
+
+			.btn-link {
+				text-decoration: none;
+			}
+
+			.btn-link:hover {
+				color: var(--accent-blue) !important;
+			}
+
+			.dropdown-menu {
+				border: 1px solid var(--light-blue);
+			}
+
+			.dropdown-item:hover {
+				background: var(--light-blue);
+			}
+
+			.comment-filters .btn {
+				padding: 0.25rem 0.75rem;
+				font-size: 0.875rem;
+			}
+
+			.comment-filters .btn.active {
+				background: var(--accent-blue);
+				color: white;
+			}
+
+			.comment-count {
+				color: var(--text-muted);
+				font-size: 1rem;
+				font-weight: normal;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand d-flex align-items-center" href="index.html">
+					<div class="logo-container me-2">
+						<div class="book-logo">
+							<span class="book-page"></span>
+							<span class="book-page"></span>
+							<span class="book-page"></span>
+						</div>
+					</div>
+					<span class="brand-text">StoryHub</span>
+				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNav"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="index.html">Trang Chủ</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#top-books">Truyện Nổi Bật</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#rankings">Xếp Hạng</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#authors">Tác Giả</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#latest-stories">Truyện Mới Nhất</a>
+						</li>
+					</ul>
+					<div class="nav-auth-buttons">
+						<button
+							class="btn btn-signin me-2"
+							data-bs-toggle="modal"
+							data-bs-target="#signinModal"
+						>
+							Đăng Nhập
+						</button>
+						<button class="btn btn-signup" data-bs-toggle="modal" data-bs-target="#signupModal">
+							Đăng Ký
+						</button>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Book Header Section -->
+		<section class="book-header">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-4 mb-4 mb-lg-0">
+						<div class="book-cover-wrapper">
+							<img src="https://picsum.photos/400/600" alt="Bệnh Nhân Im Lặng" class="book-cover" />
+							<span class="book-status">Xu Hướng</span>
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<h1 class="book-title">Bệnh Nhân Im Lặng</h1>
+						<p class="book-author">bởi <a href="#" class="author-link">Alex Michaelides</a></p>
+
+						<div class="book-stats">
+							<div class="stat-item">
+								<div class="stat-value">4.9</div>
+								<div class="stat-label">Đánh Giá</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-value">2.5M</div>
+								<div class="stat-label">Lượt Xem</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-value">52</div>
+								<div class="stat-label">Chương</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-value">156K</div>
+								<div class="stat-label">Đánh Dấu</div>
+							</div>
+						</div>
+
+						<div class="book-actions">
+							<button class="btn btn-action btn-read">
+								<i class="fas fa-book-open me-2"></i>Bắt Đầu Đọc
+							</button>
+							<button class="btn btn-action btn-bookmark">
+								<i class="far fa-bookmark me-2"></i>Đánh Dấu
+							</button>
+							<button class="btn btn-action btn-share">
+								<i class="fas fa-share-alt me-2"></i>Chia Sẻ
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<main class="container py-5">
+			<div class="row">
+				<div class="col-lg-8">
+					<!-- Synopsis -->
+					<div class="content-card">
+						<h2 class="card-title">Tóm Tắt</h2>
+						<p>
+							Alicia Berenson sống một cuộc sống tưởng chừng như hoàn hảo. Là một họa sĩ nổi tiếng
+							đã kết hôn với một nhiếp ảnh gia thời trang được săn đón, cô sống trong một ngôi nhà
+							lớn với tầm nhìn ra công viên ở một trong những khu vực đáng mơ ước nhất của London.
+						</p>
+						<p>
+							Một buổi tối, chồng cô, Gabriel, trở về nhà muộn từ một buổi chụp ảnh thời trang, và
+							Alicia bắn vào mặt anh ta năm lần, rồi không nói một lời nào nữa...
+						</p>
+					</div>
+
+					<!-- Latest Chapters -->
+					<div class="content-card">
+						<h2 class="card-title">Chương Mới Nhất</h2>
+						<div class="list-group list-group-flush">
+							<a href="#" class="list-group-item list-group-item-action bg-transparent text-light">
+								<div class="d-flex w-100 justify-content-between">
+									<h5 class="mb-1">Chương 52: Sự Thật Được Phơi Bày</h5>
+									<small>3 ngày trước</small>
+								</div>
+							</a>
+							<a href="#" class="list-group-item list-group-item-action bg-transparent text-light">
+								<div class="d-flex w-100 justify-content-between">
+									<h5 class="mb-1">Chương 51: Những Mảnh Ghép Cuối Cùng</h5>
+									<small>1 tuần trước</small>
+								</div>
+							</a>
+							<a href="#" class="list-group-item list-group-item-action bg-transparent text-light">
+								<div class="d-flex w-100 justify-content-between">
+									<h5 class="mb-1">Chương 50: Bí Mật Của Theo</h5>
+									<small>2 tuần trước</small>
+								</div>
+							</a>
+						</div>
+					</div>
+
+					<!-- Comments Section -->
+					<div class="content-card">
+						<h2 class="card-title">
+							Bình Luận
+							<span class="comment-count">(128)</span>
+						</h2>
+
+						<!-- Comment Form -->
+						<div class="comment-form mb-4">
+							<div class="d-flex gap-3">
+								<img
+									src="https://picsum.photos/50/50"
+									alt="User Avatar"
+									class="rounded-circle"
+									style="width: 50px; height: 50px; object-fit: cover"
+								/>
+								<div class="flex-grow-1">
+									<textarea
+										class="form-control bg-transparent text-light mb-2"
+										placeholder="Viết bình luận của bạn..."
+										rows="3"
+									></textarea>
+									<button class="btn btn-action btn-read">Đăng Bình Luận</button>
+								</div>
+							</div>
+						</div>
+
+						<!-- Comment Sorting -->
+						<div class="comment-sorting d-flex justify-content-between align-items-center mb-4">
+							<div class="dropdown">
+								<button
+									class="btn btn-action btn-bookmark dropdown-toggle"
+									type="button"
+									data-bs-toggle="dropdown"
+									aria-expanded="false"
+								>
+									<i class="fas fa-sort me-2"></i>Sắp xếp theo
+								</button>
+								<ul class="dropdown-menu bg-dark">
+									<li>
+										<a class="dropdown-item text-light" href="#"
+											><i class="fas fa-fire me-2"></i>Phổ biến nhất</a
+										>
+									</li>
+									<li>
+										<a class="dropdown-item text-light" href="#"
+											><i class="fas fa-clock me-2"></i>Mới nhất</a
+										>
+									</li>
+									<li>
+										<a class="dropdown-item text-light" href="#"
+											><i class="fas fa-heart me-2"></i>Nhiều lượt thích</a
+										>
+									</li>
+								</ul>
+							</div>
+							<div class="comment-filters">
+								<button class="btn btn-sm btn-action btn-bookmark active">Tất cả</button>
+								<button class="btn btn-sm btn-action btn-bookmark">Chương 52</button>
+								<button class="btn btn-sm btn-action btn-bookmark">Đã trả lời</button>
+							</div>
+						</div>
+
+						<!-- Comments List -->
+						<div class="comments-list">
+							<!-- Comment Item -->
+							<div class="comment-item mb-4">
+								<div class="d-flex gap-3">
+									<img
+										src="https://picsum.photos/seed/user1/50/50"
+										alt="User Avatar"
+										class="rounded-circle"
+										style="width: 50px; height: 50px; object-fit: cover"
+									/>
+									<div class="flex-grow-1">
+										<div class="comment-header d-flex justify-content-between align-items-start">
+											<div>
+												<h5 class="mb-1">Mai Trang</h5>
+												<small class="text-muted">2 giờ trước · Chương 52</small>
+											</div>
+											<div class="dropdown">
+												<button
+													class="btn btn-sm btn-link text-light"
+													type="button"
+													data-bs-toggle="dropdown"
+												>
+													<i class="fas fa-ellipsis-v"></i>
+												</button>
+												<ul class="dropdown-menu bg-dark">
+													<li>
+														<a class="dropdown-item text-light" href="#"
+															><i class="fas fa-flag me-2"></i>Báo cáo</a
+														>
+													</li>
+													<li>
+														<a class="dropdown-item text-light" href="#"
+															><i class="fas fa-ban me-2"></i>Chặn người dùng</a
+														>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<p class="comment-content mt-2">
+											Cốt truyện thực sự rất hay và lôi cuốn. Tôi không thể ngừng đọc cho đến khi
+											kết thúc chương này. Các tình tiết được xây dựng rất tốt và khiến người đọc
+											luôn tò mò về những gì sẽ xảy ra tiếp theo.
+										</p>
+										<div class="comment-actions d-flex gap-3 align-items-center">
+											<button class="btn btn-sm btn-link text-light">
+												<i class="far fa-heart me-1"></i>45
+											</button>
+											<button class="btn btn-sm btn-link text-light">
+												<i class="far fa-comment me-1"></i>12
+											</button>
+											<button class="btn btn-sm btn-link text-light">
+												<i class="far fa-share-square me-1"></i>Chia sẻ
+											</button>
+										</div>
+
+										<!-- Replies -->
+										<div class="replies mt-3">
+											<button class="btn btn-sm btn-link text-light mb-3">
+												<i class="fas fa-chevron-down me-1"></i>Xem 12 phản hồi
+											</button>
+
+											<!-- Reply Item -->
+											<div class="reply-item d-flex gap-3 mb-3">
+												<img
+													src="https://picsum.photos/seed/user2/40/40"
+													alt="User Avatar"
+													class="rounded-circle"
+													style="width: 40px; height: 40px; object-fit: cover"
+												/>
+												<div class="flex-grow-1">
+													<div
+														class="reply-header d-flex justify-content-between align-items-start"
+													>
+														<div>
+															<h6 class="mb-1">Hoàng Minh</h6>
+															<small class="text-muted">1 giờ trước</small>
+														</div>
+													</div>
+													<p class="reply-content mt-2">
+														Đồng ý với bạn! Đặc biệt là phần kết thúc của chương này thực sự bất
+														ngờ.
+													</p>
+													<div class="reply-actions d-flex gap-3 align-items-center">
+														<button class="btn btn-sm btn-link text-light">
+															<i class="far fa-heart me-1"></i>8
+														</button>
+														<button class="btn btn-sm btn-link text-light">
+															<i class="far fa-comment me-1"></i>Phản hồi
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- Another Comment Item -->
+							<div class="comment-item mb-4">
+								<div class="d-flex gap-3">
+									<img
+										src="https://picsum.photos/seed/user3/50/50"
+										alt="User Avatar"
+										class="rounded-circle"
+										style="width: 50px; height: 50px; object-fit: cover"
+									/>
+									<div class="flex-grow-1">
+										<div class="comment-header d-flex justify-content-between align-items-start">
+											<div>
+												<h5 class="mb-1">Thu Hà</h5>
+												<small class="text-muted">5 giờ trước · Chương 51</small>
+											</div>
+											<div class="dropdown">
+												<button
+													class="btn btn-sm btn-link text-light"
+													type="button"
+													data-bs-toggle="dropdown"
+												>
+													<i class="fas fa-ellipsis-v"></i>
+												</button>
+												<ul class="dropdown-menu bg-dark">
+													<li>
+														<a class="dropdown-item text-light" href="#"
+															><i class="fas fa-flag me-2"></i>Báo cáo</a
+														>
+													</li>
+													<li>
+														<a class="dropdown-item text-light" href="#"
+															><i class="fas fa-ban me-2"></i>Chặn người dùng</a
+														>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<p class="comment-content mt-2">
+											Tôi có một số dự đoán về hướng phát triển của câu chuyện. Có ai nghĩ rằng Theo
+											đang giấu điều gì đó không? Những chi tiết trong chương này có vẻ đang gợi ý
+											về điều đó.
+										</p>
+										<div class="comment-actions d-flex gap-3 align-items-center">
+											<button class="btn btn-sm btn-link text-light">
+												<i class="far fa-heart me-1"></i>32
+											</button>
+											<button class="btn btn-sm btn-link text-light">
+												<i class="far fa-comment me-1"></i>8
+											</button>
+											<button class="btn btn-sm btn-link text-light">
+												<i class="far fa-share-square me-1"></i>Chia sẻ
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Load More Comments -->
+						<div class="text-center mt-4">
+							<button class="btn btn-action btn-bookmark">
+								<i class="fas fa-spinner me-2"></i>Xem thêm bình luận
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-4">
+					<!-- Author Info -->
+					<div class="content-card text-center">
+						<h2 class="card-title">Về Tác Giả</h2>
+						<img
+							src="https://picsum.photos/150/150"
+							alt="Alex Michaelides"
+							class="rounded-circle mb-3"
+							style="width: 150px; height: 150px; object-fit: cover"
+						/>
+						<h3 class="h4 mb-3">Alex Michaelides</h3>
+						<p class="text-light">
+							Tác giả best-seller của nhiều cuốn sách trinh thám tâm lý đình đám.
+						</p>
+						<button class="btn btn-action btn-bookmark w-100">Xem Trang Tác Giả</button>
+					</div>
+
+					<!-- Similar Books -->
+					<div class="content-card">
+						<h2 class="card-title">Sách Tương Tự</h2>
+						<!-- Add similar books content here -->
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- Footer -->
+		<footer class="footer-section">
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<!-- Cột Giới Thiệu -->
+						<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+							<div class="footer-logo d-flex align-items-center mb-3">
+								<div class="logo-container me-2">
+									<div class="book-logo">
+										<span class="book-page"></span>
+										<span class="book-page"></span>
+										<span class="book-page"></span>
+									</div>
+								</div>
+								<span class="brand-text">StoryHub</span>
+							</div>
+							<p class="footer-about">
+								Khám phá hàng ngàn câu chuyện tuyệt vời sẽ đưa bạn vào những hành trình đáng kinh
+								ngạc. Tham gia cộng đồng độc giả đam mê của chúng tôi ngay hôm nay.
+							</p>
+							<div class="social-links">
+								<a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+							</div>
+						</div>
+
+						<!-- Liên Kết Nhanh -->
+						<div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+							<h4 class="footer-title">Liên Kết Nhanh</h4>
+							<ul class="footer-links">
+								<li><a href="index.html">Trang Chủ</a></li>
+								<li><a href="about.html">Về Chúng Tôi</a></li>
+								<li><a href="#top-books">Thể Loại</a></li>
+								<li><a href="#rankings">Truyện Nổi Bật</a></li>
+								<li><a href="#authors">Tác Giả</a></li>
+							</ul>
+						</div>
+
+						<!-- Hỗ Trợ & Trợ Giúp -->
+						<div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+							<h4 class="footer-title">Hỗ Trợ</h4>
+							<ul class="footer-links">
+								<li><a href="help-center.html">Trợ Giúp</a></li>
+								<li><a href="terms-of-service.html">Điều Khoản</a></li>
+								<li><a href="privacy-policy.html">Bảo Mật</a></li>
+								<li><a href="faqs.html">FAQs</a></li>
+								<li><a href="contact-us.html">Liên Hệ</a></li>
+							</ul>
+						</div>
+
+						<!-- Bản Tin -->
+						<div class="col-lg-4 col-md-6">
+							<h4 class="footer-title">Bản Tin</h4>
+							<p class="newsletter-text">
+								Đăng ký nhận bản tin của chúng tôi để nhận các cập nhật mới nhất.
+							</p>
+							<form class="newsletter-form">
+								<div class="input-group">
+									<input type="email" class="form-control" placeholder="Địa chỉ email của bạn" />
+									<button class="btn btn-subscribe" type="submit">
+										<i class="fas fa-paper-plane"></i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Phần Bản Quyền -->
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="text-center">
+							<p class="copyright">
+								© <span id="currentYear"></span> StoryHub. Mọi quyền được bảo lưu.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- Bootstrap JS -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

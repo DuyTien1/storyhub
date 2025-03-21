@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Đọc: Bệnh Nhân Im Lặng - Chương 1 | StoryHub</title>
+		<link rel="icon" type="image/x-icon" href="assets/icons/icon1.png" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+		/>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+		<link href="assets/css/style.css" rel="stylesheet" />
+		<style>
+			:root {
+				--dark-blue: #0c1a2d;
+				--medium-blue: #1a2c4e;
+				--light-blue: #2e4272;
+				--accent-blue: #4f74c8;
+				--text-light: #e6e6e6;
+				--text-muted: #9aa5b8;
+				--font-size: 14px;
+				--line-height: 1.8;
+				--reading-width: 800px;
+			}
+
+			body {
+				padding-top: 115px;
+				padding-bottom: 1px;
+				background-color: var(--dark-blue);
+				color: var(--text-light);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
+			}
+
+			/* Smaller Reading Header */
+			.reading-header {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				background: var(--medium-blue);
+				padding: 8px 0; /* Reduced from 1rem (16px) */
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+				z-index: 1000;
+				transition: transform 0.3s ease;
+				height: auto;
+				min-height: 48px; /* Set a specific smaller height */
+			}
+
+			.reading-header.hidden {
+				transform: translateY(-100%);
+			}
+
+			.reading-header .container-fluid {
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+
+			.reading-header .btn-link {
+				padding: 4px 8px;
+				font-size: 14px;
+			}
+
+			.reading-header .book-info h1 {
+				font-size: 1rem; /* Smaller title */
+				margin: 0;
+				font-weight: 600;
+				line-height: 1.2;
+			}
+
+			.reading-header .chapter-info {
+				color: var(--text-muted);
+				font-size: 0.8rem; /* Smaller subtitle */
+				line-height: 1.2;
+			}
+
+			/* Adjust the back button and settings button */
+			.reading-header .col-auto {
+				padding-left: 5px;
+				padding-right: 5px;
+			}
+
+			.reading-header .btn-link i {
+				font-size: 14px;
+			}
+
+			/* Reading Settings */
+			.reading-settings {
+				padding-top: 115px;
+				position: fixed;
+				right: -300px;
+				top: 0;
+				bottom: 0;
+				width: 300px;
+				background: var(--medium-blue);
+				padding: 2rem;
+				box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+				transition: right 0.3s ease;
+				z-index: 1001;
+				overflow-y: auto;
+			}
+
+			.reading-settings.active {
+				right: 0;
+				padding-top: 115px;
+			}
+
+			.settings-group {
+				margin-bottom: 2rem;
+			}
+
+			.settings-group h3 {
+				font-size: 1.1rem;
+				margin-bottom: 1rem;
+				color: var(--text-light);
+			}
+
+			/* Font Size Controls */
+			.font-size-controls {
+				display: flex;
+				align-items: center;
+				gap: 1rem;
+			}
+
+			.font-size-btn {
+				background: var(--light-blue);
+				border: none;
+				color: var(--text-light);
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				transition: all 0.2s ease;
+			}
+
+			.font-size-btn:hover {
+				background: var(--accent-blue);
+			}
+
+			/* Theme Selection */
+			.theme-options {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 12px;
+				margin-bottom: 1.5rem;
+			}
+
+			.theme-option {
+				height: 50px;
+				border-radius: 10px;
+				cursor: pointer;
+				border: 2px solid transparent;
+				transition: all 0.3s ease;
+				position: relative;
+				overflow: hidden;
+				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+			}
+
+			.theme-option::after {
+				content: attr(data-name);
+				position: absolute;
+				bottom: 8px;
+				left: 0;
+				right: 0;
+				text-align: center;
+				font-size: 12px;
+				font-weight: 500;
+				padding: 2px 4px;
+				background-color: rgba(0, 0, 0, 0.5);
+				color: white;
+				opacity: 0;
+				transition: opacity 0.3s ease;
+			}
+
+			.theme-option:hover::after,
+			.theme-option.active::after {
+				opacity: 1;
+			}
+
+			.theme-option.active {
+				border-color: var(--accent-blue);
+				box-shadow: 0 0 15px rgba(79, 116, 200, 0.5);
+				transform: translateY(-3px);
+			}
+
+			/* Theme Styles */
+			.theme-dark {
+				background: linear-gradient(135deg, #0c1a2d, #1a2c4e);
+			}
+
+			.theme-light {
+				background: linear-gradient(135deg, #ffffff, #f0f0f0);
+			}
+
+			.theme-sepia {
+				background: linear-gradient(135deg, #f4ecd8, #e4d5b7);
+			}
+
+			.theme-night {
+				background: linear-gradient(135deg, #000000, #121212);
+			}
+
+			.theme-ocean {
+				background: linear-gradient(135deg, #1a3b5c, #2d6089);
+			}
+
+			.theme-forest {
+				background: linear-gradient(135deg, #1b4d3e, #2d7a5e);
+			}
+
+			.theme-sunset {
+				background: linear-gradient(135deg, #4a2618, #b5441d);
+			}
+
+			.theme-coffee {
+				background: linear-gradient(135deg, #2c1810, #5c341e);
+			}
+
+			.theme-lavender {
+				background: linear-gradient(135deg, #4a3b7c, #6a5aad);
+			}
+
+			.theme-mint {
+				background: linear-gradient(135deg, #d8f4e4, #9fe6c3);
+			}
+
+			.theme-contrast {
+				background: linear-gradient(135deg, #000000, #0a0a0a);
+				border: 2px solid #ffffff;
+			}
+
+			.theme-paper {
+				background: linear-gradient(135deg, #f8f5e6, #e8e0c9);
+			}
+
+			/* Reading Content */
+			.reading-content {
+				max-width: var(--reading-width);
+				margin-top: 70px; /* Adjust this based on new header height */
+				margin: 100px auto 50px;
+				padding: 2rem;
+				background: var(--medium-blue);
+				border-radius: 12px;
+				box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+			}
+
+			.chapter-title {
+				font-size: 2rem;
+				margin-bottom: 2rem;
+				text-align: center;
+			}
+
+			.chapter-content p {
+				margin-bottom: 1.5rem;
+				text-align: justify;
+			}
+
+			/* Chapter Navigation */
+			.chapter-navigation {
+				display: flex;
+				width: auto;
+				gap: 1rem;
+				background: var(--medium-blue);
+				padding: 1rem;
+				border-radius: 50px;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+				z-index: 1000;
+				font-size: 14px !important;
+				line-height: 1.5 !important;
+			}
+
+			.nav-btn {
+				background: var(--light-blue);
+				border: none;
+				color: var(--text-light);
+				padding: 8px 16px !important;
+				border-radius: 25px;
+				cursor: pointer;
+				transition: all 0.2s ease;
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 14px !important;
+				line-height: 1.5 !important;
+				font-weight: 500 !important;
+				height: auto !important;
+				min-height: 42px !important;
+				box-sizing: border-box !important;
+			}
+
+			.nav-btn i {
+				font-size: 14px !important;
+			}
+
+			.nav-btn:hover {
+				background: var(--accent-blue);
+				transform: translateY(-2px);
+			}
+
+			.nav-btn.disabled {
+				opacity: 0.5;
+				cursor: not-allowed;
+			}
+
+			/* Make sure the buttons stay the same even if font size changes */
+			.chapter-navigation,
+			.nav-btn,
+			.nav-btn i,
+			.nav-btn span {
+				font-size: 14px !important;
+				text-transform: none !important;
+				letter-spacing: normal !important;
+			}
+
+			/* Progress Bar */
+			.progress-container {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 2px; /* Make the progress bar thinner */
+				background: var(--light-blue);
+				z-index: 1002;
+			}
+
+			.progress-bar {
+				height: 100%;
+				background: var(--accent-blue);
+				width: 0;
+				transition: width 0.3s ease;
+			}
+
+			/* Reading Stats */
+			.reading-stats {
+				width: auto;
+				left: 2rem;
+				bottom: 2rem;
+				background: var(--medium-blue);
+				padding: 1rem;
+				border-radius: 12px;
+				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+			}
+
+			.stat {
+				display: flex;
+				align-items: center;
+				gap: 0.5rem;
+				color: var(--text-muted);
+				font-size: 0.9rem;
+			}
+
+			/* Responsive Design */
+			@media (max-width: 768px) {
+				:root {
+					--reading-width: 100%;
+					--font-size: 16px;
+				}
+
+				.reading-content {
+					padding: 1rem;
+					margin: 80px 1rem 100px;
+				}
+
+				.reading-stats {
+					display: none;
+				}
+			}
+
+			/* Overlay Styles */
+			.settings-overlay {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: rgba(0, 0, 0, 0.5);
+				opacity: 0;
+				visibility: hidden;
+				transition: all 0.3s ease;
+				z-index: 1000;
+				backdrop-filter: blur(3px);
+			}
+
+			.settings-overlay.active {
+				opacity: 1;
+				visibility: visible;
+			}
+
+			/* Close Button Styles */
+			.close-settings {
+				position: absolute;
+				right: 50%;
+				bottom: 5%;
+				transform: translateX(50%);
+				background-color: #ff0000;
+				border: none;
+				color: var(--text-light);
+				width: 36px;
+				height: 36px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				transition: all 0.3s ease;
+			}
+
+			.close-settings:hover {
+				opacity: 0.8;
+			}
+
+			.btn-action {
+				font-size: 24px;
+				color: white;
+			}
+
+			/* Animation for Settings Panel */
+			@keyframes slideIn {
+				from {
+					right: -300px;
+					opacity: 0;
+				}
+				to {
+					right: 0;
+					opacity: 1;
+				}
+			}
+
+			@keyframes slideOut {
+				from {
+					right: 0;
+					opacity: 1;
+				}
+				to {
+					right: -300px;
+					opacity: 0;
+				}
+			}
+
+			.reading-settings.active {
+				animation: slideIn 0.3s ease forwards;
+			}
+
+			.reading-settings.closing {
+				animation: slideOut 0.3s ease forwards;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Progress Bar -->
+		<div class="progress-container">
+			<div class="progress-bar" id="readingProgress"></div>
+		</div>
+
+		<!-- Navigation -->
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+			<div class="container">
+				<a class="navbar-brand d-flex align-items-center" href="index.html">
+					<div class="logo-container me-2">
+						<div class="book-logo">
+							<span class="book-page"></span>
+							<span class="book-page"></span>
+							<span class="book-page"></span>
+						</div>
+					</div>
+					<span class="brand-text">StoryHub</span>
+				</a>
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#navbarNav"
+				>
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="index.html">Trang Chủ</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#top-books">Truyện Nổi Bật</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#rankings">Xếp Hạng</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#authors">Tác Giả</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="index.html#latest-stories">Truyện Mới Nhất</a>
+						</li>
+					</ul>
+					<div class="nav-auth-buttons">
+						<button
+							class="btn btn-signin me-2"
+							data-bs-toggle="modal"
+							data-bs-target="#signinModal"
+						>
+							Đăng Nhập
+						</button>
+						<button class="btn btn-signup" data-bs-toggle="modal" data-bs-target="#signupModal">
+							Đăng Ký
+						</button>
+					</div>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Add this after navbar to show current reading info -->
+		<div class="reading-info-bar">
+			<div class="container">
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="reading-book-info">
+						<h1>Bệnh Nhân Im Lặng</h1>
+						<div class="chapter-info">Chương 1: Im Lặng Ban Đầu</div>
+					</div>
+					<div class="reading-actions">
+						<button class="btn btn-sm btn-action" id="settingsToggle">
+							<i class="fas fa-cog"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Reading Settings Panel -->
+		<div class="reading-settings" id="settingsPanel">
+			<div class="settings-header">
+				<h2>Cài Đặt Đọc</h2>
+				<button class="close-settings" id="closeSettings" aria-label="Close settings">
+					<i class="fas fa-times"></i>
+				</button>
+			</div>
+
+			<div class="settings-group">
+				<h3>Cỡ Chữ</h3>
+				<div class="font-size-controls">
+					<button class="font-size-btn" id="decreaseFont">
+						<i class="fas fa-minus"></i>
+					</button>
+					<span id="currentFontSize">14px</span>
+					<button class="font-size-btn" id="increaseFont">
+						<i class="fas fa-plus"></i>
+					</button>
+				</div>
+			</div>
+
+			<div class="settings-group">
+				<h3>Giao Diện</h3>
+				<div class="theme-options">
+					<div class="theme-option theme-dark active" data-theme="dark" data-name="Tối"></div>
+					<div class="theme-option theme-light" data-theme="light" data-name="Sáng"></div>
+					<div class="theme-option theme-sepia" data-theme="sepia" data-name="Sepia"></div>
+					<div class="theme-option theme-night" data-theme="night" data-name="Đêm"></div>
+					<div class="theme-option theme-ocean" data-theme="ocean" data-name="Đại dương"></div>
+					<div class="theme-option theme-forest" data-theme="forest" data-name="Rừng"></div>
+					<div class="theme-option theme-sunset" data-theme="sunset" data-name="Hoàng hôn"></div>
+					<div class="theme-option theme-coffee" data-theme="coffee" data-name="Cà phê"></div>
+					<div
+						class="theme-option theme-lavender"
+						data-theme="lavender"
+						data-name="Oải hương"
+					></div>
+					<div class="theme-option theme-mint" data-theme="mint" data-name="Bạc hà"></div>
+					<div
+						class="theme-option theme-contrast"
+						data-theme="contrast"
+						data-name="Tương phản cao"
+					></div>
+					<div class="theme-option theme-paper" data-theme="paper" data-name="Giấy cũ"></div>
+				</div>
+			</div>
+
+			<div class="settings-group">
+				<h3>Chiều Rộng Đọc</h3>
+				<input
+					type="range"
+					class="form-range"
+					id="readingWidth"
+					min="600"
+					max="1200"
+					step="100"
+					value="800"
+				/>
+			</div>
+		</div>
+
+		<!-- Main Reading Content -->
+		<main class="reading-content">
+			<h2 class="chapter-title">Chương 1: Im Lặng Ban Đầu</h2>
+			<div class="chapter-content">
+				<p>
+					Alicia Berenson là một họa sĩ tài năng và là vợ của một nhiếp ảnh gia thời trang nổi
+					tiếng. Cô sống trong một ngôi nhà lớn với tầm nhìn ra công viên ở một trong những khu vực
+					đáng mơ ước nhất của London. Một buổi tối nọ, chồng cô trở về nhà muộn sau một buổi chụp
+					ảnh thời trang...
+				</p>
+				<p>
+					Đêm đó, hàng xóm nghe thấy năm phát súng. Khi cảnh sát đến, họ tìm thấy Gabriel Berenson
+					bị trói vào ghế, bị bắn năm phát vào mặt. Alicia đứng bên cạnh xác chồng, im lặng, với
+					khẩu súng vẫn còn ấm trong tay...
+				</p>
+				<!-- Add more paragraphs as needed -->
+			</div>
+		</main>
+
+		<section>
+			<div class="raw gap-3 d-flex justify-content-between align-items-center p-5">
+				<div class="reading-stats d-block col-6">
+					<div class="stat">
+						<i class="fas fa-clock"></i>
+						<span>Thời gian đọc: 12 phút</span>
+					</div>
+					<div class="stat">
+						<i class="fas fa-book-open"></i>
+						<span>Chương 11</span>
+					</div>
+				</div>
+
+				<!-- Chapter Navigation with fixed sizing -->
+				<div class="chapter-navigation col-6">
+					<button class="nav-btn disabled">
+						<i class="fas fa-chevron-left"></i>
+						<span>Chương Trước</span>
+					</button>
+					<button class="nav-btn">
+						<span>Chương Sau</span>
+						<i class="fas fa-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer class="footer-section">
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+						<!-- Cột Giới Thiệu -->
+						<div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+							<div class="footer-logo d-flex align-items-center mb-3">
+								<div class="logo-container me-2">
+									<div class="book-logo">
+										<span class="book-page"></span>
+										<span class="book-page"></span>
+										<span class="book-page"></span>
+									</div>
+								</div>
+								<span class="brand-text">StoryHub</span>
+							</div>
+							<p class="footer-about">
+								Khám phá hàng ngàn câu chuyện tuyệt vời sẽ đưa bạn vào những hành trình đáng kinh
+								ngạc. Tham gia cộng đồng độc giả đam mê của chúng tôi ngay hôm nay.
+							</p>
+							<div class="social-links">
+								<a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+								<a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+							</div>
+						</div>
+
+						<!-- Liên Kết Nhanh -->
+						<div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+							<h4 class="footer-title">Liên Kết Nhanh</h4>
+							<ul class="footer-links">
+								<li><a href="index.html">Trang Chủ</a></li>
+								<li><a href="about.html">Về Chúng Tôi</a></li>
+								<li><a href="index.html#top-books">Thể Loại</a></li>
+								<li><a href="index.html#rankings">Truyện Nổi Bật</a></li>
+								<li><a href="index.html#authors">Tác Giả</a></li>
+							</ul>
+						</div>
+
+						<!-- Hỗ Trợ & Trợ Giúp -->
+						<div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+							<h4 class="footer-title">Hỗ Trợ</h4>
+							<ul class="footer-links">
+								<li><a href="help-center.html">Trợ Giúp</a></li>
+								<li><a href="terms-of-service.html">Điều Khoản</a></li>
+								<li><a href="privacy-policy.html">Bảo Mật</a></li>
+								<li><a href="faqs.html">FAQs</a></li>
+								<li><a href="contact-us.html">Liên Hệ</a></li>
+							</ul>
+						</div>
+
+						<!-- Bản Tin -->
+						<div class="col-lg-4 col-md-6">
+							<h4 class="footer-title">Bản Tin</h4>
+							<p class="newsletter-text">
+								Đăng ký nhận bản tin của chúng tôi để nhận các cập nhật mới nhất.
+							</p>
+							<form class="newsletter-form">
+								<div class="input-group">
+									<input type="email" class="form-control" placeholder="Địa chỉ email của bạn" />
+									<button class="btn btn-subscribe" type="submit">
+										<i class="fas fa-paper-plane"></i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Phần Bản Quyền -->
+			<div class="footer-bottom">
+				<div class="container">
+					<div class="row align-items-center">
+						<div class="text-center">
+							<p class="copyright">
+								© <span id="currentYear"></span> StoryHub. Mọi quyền được bảo lưu.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- Scripts -->
+		<script>
+			// Toggle Settings Panel
+			const settingsToggle = document.getElementById("settingsToggle");
+			const settingsPanel = document.getElementById("settingsPanel");
+			const closeSettings = document.getElementById("closeSettings");
+
+			// Create and add overlay div if it doesn't exist
+			let overlay = document.createElement("div");
+			overlay.className = "settings-overlay";
+			document.body.appendChild(overlay);
+
+			// Function to open settings
+			const openSettings = () => {
+				settingsPanel.classList.add("active");
+				overlay.classList.add("active");
+				document.body.style.overflow = "hidden"; // Prevent scrolling
+			};
+
+			// Function to close settings
+			const closeSettingsPanel = () => {
+				settingsPanel.classList.remove("active");
+				overlay.classList.remove("active");
+				document.body.style.overflow = ""; // Re-enable scrolling
+			};
+
+			// Toggle settings when clicking the settings button
+			settingsToggle.addEventListener("click", () => {
+				if (settingsPanel.classList.contains("active")) {
+					closeSettingsPanel();
+				} else {
+					openSettings();
+				}
+			});
+
+			// Close settings when clicking the close button
+			closeSettings.addEventListener("click", closeSettingsPanel);
+
+			// Close settings when clicking outside
+			overlay.addEventListener("click", closeSettingsPanel);
+
+			// Close settings when pressing ESC key
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Escape" && settingsPanel.classList.contains("active")) {
+					closeSettingsPanel();
+				}
+			});
+
+			// Font Size Controls
+			const decreaseFont = document.getElementById("decreaseFont");
+			const increaseFont = document.getElementById("increaseFont");
+			const currentFontSize = document.getElementById("currentFontSize");
+			let fontSize = 14;
+
+			decreaseFont.addEventListener("click", () => {
+				if (fontSize > 12) {
+					fontSize -= 2;
+					updateFontSize();
+				}
+			});
+
+			increaseFont.addEventListener("click", () => {
+				if (fontSize < 18) {
+					fontSize += 2;
+					updateFontSize();
+				}
+			});
+
+			function updateFontSize() {
+				document.documentElement.style.setProperty("--font-size", `${fontSize}px`);
+				currentFontSize.textContent = `${fontSize}px`;
+
+				// Reset chapter navigation to fixed size
+				const chapterNav = document.querySelector(".chapter-navigation");
+				const navButtons = document.querySelectorAll(".nav-btn");
+
+				if (chapterNav) {
+					chapterNav.style.fontSize = "14px";
+				}
+
+				if (navButtons.length) {
+					navButtons.forEach((btn) => {
+						btn.style.fontSize = "14px";
+						const icons = btn.querySelectorAll("i");
+						const spans = btn.querySelectorAll("span");
+
+						icons.forEach((icon) => (icon.style.fontSize = "14px"));
+						spans.forEach((span) => (span.style.fontSize = "14px"));
+					});
+				}
+			}
+
+			// Reading Progress
+			const progressBar = document.getElementById("readingProgress");
+
+			window.addEventListener("scroll", () => {
+				const windowHeight = window.innerHeight;
+				const documentHeight = document.documentElement.scrollHeight - windowHeight;
+				const scrolled = window.scrollY;
+				const progress = (scrolled / documentHeight) * 100;
+				progressBar.style.width = `${progress}%`;
+			});
+
+			// Auto-hide Header
+			let lastScroll = 0;
+			const header = document.querySelector(".reading-header");
+
+			window.addEventListener("scroll", () => {
+				const currentScroll = window.pageYOffset;
+
+				if (currentScroll > lastScroll && currentScroll > 100) {
+					header.classList.add("hidden");
+				} else {
+					header.classList.remove("hidden");
+				}
+
+				lastScroll = currentScroll;
+			});
+
+			// Enhanced Theme Handling
+			const themes = {
+				dark: {
+					darkBg: "#0c1a2d",
+					mediumBg: "#1a2c4e",
+					lightBg: "#2e4272",
+					text: "#e6e6e6",
+					textMuted: "#9aa5b8",
+				},
+				light: {
+					darkBg: "#ffffff",
+					mediumBg: "#f5f5f5",
+					lightBg: "#e9e9e9",
+					text: "#333333",
+					textMuted: "#666666",
+				},
+				sepia: {
+					darkBg: "#f4ecd8",
+					mediumBg: "#e4d5b7",
+					lightBg: "#d8c8a5",
+					text: "#5c4b24",
+					textMuted: "#7a6942",
+				},
+				night: {
+					darkBg: "#000000",
+					mediumBg: "#121212",
+					lightBg: "#1e1e1e",
+					text: "#e0e0e0",
+					textMuted: "#a0a0a0",
+				},
+				ocean: {
+					darkBg: "#1a3b5c",
+					mediumBg: "#2d6089",
+					lightBg: "#3d7ba8",
+					text: "#e6e6e6",
+					textMuted: "#a5c4e0",
+				},
+				forest: {
+					darkBg: "#1b4d3e",
+					mediumBg: "#2d7a5e",
+					lightBg: "#3e9876",
+					text: "#e6e6e6",
+					textMuted: "#a5d8c4",
+				},
+				sunset: {
+					darkBg: "#4a2618",
+					mediumBg: "#b5441d",
+					lightBg: "#e05f2d",
+					text: "#fff1e6",
+					textMuted: "#ffc5a1",
+				},
+				coffee: {
+					darkBg: "#2c1810",
+					mediumBg: "#5c341e",
+					lightBg: "#8c512c",
+					text: "#f5ebe1",
+					textMuted: "#d3b8a0",
+				},
+				lavender: {
+					darkBg: "#4a3b7c",
+					mediumBg: "#6a5aad",
+					lightBg: "#8a78d2",
+					text: "#f2efff",
+					textMuted: "#c9c2e8",
+				},
+				mint: {
+					darkBg: "#d8f4e4",
+					mediumBg: "#9fe6c3",
+					lightBg: "#76d6a8",
+					text: "#2d3e36",
+					textMuted: "#5c7869",
+				},
+				contrast: {
+					darkBg: "#000000",
+					mediumBg: "#0a0a0a",
+					lightBg: "#181818",
+					text: "#ffffff",
+					textMuted: "#dddddd",
+				},
+				paper: {
+					darkBg: "#f8f5e6",
+					mediumBg: "#e8e0c9",
+					lightBg: "#d5c8a8",
+					text: "#463c28",
+					textMuted: "#7d6b49",
+				},
+			};
+
+			// Update theme selection with the new themes
+			const themeOptions = document.querySelectorAll(".theme-option");
+			themeOptions.forEach((option) => {
+				option.addEventListener("click", () => {
+					// Remove active class from all options
+					themeOptions.forEach((opt) => opt.classList.remove("active"));
+
+					// Add active class to selected option
+					option.classList.add("active");
+
+					// Get theme data
+					const theme = option.dataset.theme;
+					const themeColors = themes[theme];
+
+					// Apply theme
+					document.documentElement.style.setProperty("--dark-blue", themeColors.darkBg);
+					document.documentElement.style.setProperty("--medium-blue", themeColors.mediumBg);
+					document.documentElement.style.setProperty("--light-blue", themeColors.lightBg);
+					document.documentElement.style.setProperty("--text-light", themeColors.text);
+					document.documentElement.style.setProperty("--text-muted", themeColors.textMuted);
+
+					// Save the theme preference
+					localStorage.setItem("preferredTheme", theme);
+				});
+			});
+
+			// Load saved theme preference
+			document.addEventListener("DOMContentLoaded", () => {
+				const savedTheme = localStorage.getItem("preferredTheme");
+				if (savedTheme) {
+					const themeToApply = document.querySelector(`.theme-option[data-theme="${savedTheme}"]`);
+					if (themeToApply) {
+						themeToApply.click();
+					}
+				}
+			});
+
+			// Reading Width Control
+			const readingWidth = document.getElementById("readingWidth");
+
+			readingWidth.addEventListener("input", () => {
+				document.documentElement.style.setProperty("--reading-width", `${readingWidth.value}px`);
+			});
+		</script>
+	</body>
+</html>
