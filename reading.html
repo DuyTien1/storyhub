@@ -124,6 +124,7 @@
 				display: flex;
 				align-items: center;
 				gap: 1rem;
+				position: relative;
 			}
 
 			.font-size-btn {
@@ -138,10 +139,51 @@
 				justify-content: center;
 				cursor: pointer;
 				transition: all 0.2s ease;
+				position: relative;
 			}
 
-			.font-size-btn:hover {
+			.font-size-btn:hover:not(.disabled) {
 				background: var(--accent-blue);
+				transform: translateY(-2px);
+			}
+
+			.font-size-btn.disabled {
+				opacity: 0.5;
+				cursor: not-allowed;
+				background: var(--dark-blue);
+			}
+
+			.font-size-btn.disabled:hover::after {
+				content: attr(data-limit);
+				position: absolute;
+				bottom: -30px;
+				left: 50%;
+				transform: translateX(-50%);
+				background: rgba(0, 0, 0, 0.8);
+				color: white;
+				padding: 4px 8px;
+				border-radius: 4px;
+				font-size: 12px;
+				white-space: nowrap;
+			}
+
+			#decreaseFont.disabled:hover::after {
+				content: "Kích thước tối thiểu";
+			}
+
+			#increaseFont.disabled:hover::after {
+				content: "Kích thước tối đa";
+			}
+
+			#currentFontSize {
+				min-width: 50px;
+				text-align: center;
+				font-weight: 500;
+				color: var(--text-light);
+				background: rgba(0, 0, 0, 0.2);
+				padding: 4px 8px;
+				border-radius: 4px;
+				transition: all 0.3s ease;
 			}
 
 			/* Theme Selection */
@@ -265,12 +307,11 @@
 			/* Chapter Navigation */
 			.chapter-navigation {
 				display: flex;
-				width: auto;
+				justify-content: center;
+				align-items: center;
 				gap: 1rem;
-				background: var(--medium-blue);
 				padding: 1rem;
 				border-radius: 50px;
-				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 				z-index: 1000;
 				font-size: 14px !important;
 				line-height: 1.5 !important;
@@ -339,6 +380,10 @@
 
 			/* Reading Stats */
 			.reading-stats {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
 				width: auto;
 				left: 2rem;
 				bottom: 2rem;
@@ -350,7 +395,9 @@
 
 			.stat {
 				display: flex;
+				justify-content: flex-start;
 				align-items: center;
+				width: 100%;
 				gap: 0.5rem;
 				color: var(--text-muted);
 				font-size: 0.9rem;
@@ -365,12 +412,12 @@
 
 				.reading-content {
 					padding: 1rem;
-					margin: 80px 1rem 100px;
+					margin: 50px 1rem 100px;
 				}
 
-				.reading-stats {
+				/* .reading-stats {
 					display: none;
-				}
+				} */
 			}
 
 			/* Overlay Styles */
@@ -450,6 +497,319 @@
 
 			.reading-settings.closing {
 				animation: slideOut 0.3s ease forwards;
+			}
+
+			/* Comments Section Styles */
+			.comments-section {
+				padding: 3rem 0;
+				position: relative;
+			}
+
+			.comments-section::before {
+				content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				height: 1px;
+				background: linear-gradient(to right, transparent, var(--accent-blue), transparent);
+				opacity: 0.5;
+			}
+
+			.comments-container {
+				max-width: var(--reading-width);
+				margin: 0 auto;
+				background: var(--medium-blue);
+				border-radius: 16px;
+				padding: 2.5rem;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+				border: 1px solid rgba(255, 255, 255, 0.05);
+			}
+
+			.comments-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: 0.5rem;
+			}
+
+			.commenter-info {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+
+			.btn-more {
+				background: none;
+				border: none;
+				color: var(--text-muted);
+				padding: 4px 8px;
+				font-size: 14px;
+				transition: all 0.2s ease;
+				border-radius: 4px;
+			}
+
+			.btn-more:hover {
+				color: var(--text-light);
+				background: rgba(255, 255, 255, 0.1);
+			}
+
+			.dropdown-menu {
+				min-width: 180px;
+				padding: 0.5rem;
+				margin: 0;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				background-color: var(--medium-blue) !important;
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+			}
+
+			.dropdown-item {
+				padding: 0.5rem 1rem;
+				border-radius: 6px;
+				color: var(--text-light) !important;
+				transition: all 0.2s ease;
+			}
+
+			.dropdown-item:hover {
+				background: var(--light-blue) !important;
+				transform: translateX(5px);
+			}
+
+			.comments-header h3 {
+				margin: 0;
+				font-size: 1.7rem;
+				font-weight: 600;
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				background: linear-gradient(90deg, var(--text-light), var(--accent-blue));
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+			}
+
+			.comments-filter .form-select {
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				background-color: rgba(0, 0, 0, 0.2);
+				color: var(--text-light);
+				border-radius: 8px;
+				padding: 8px 32px 8px 16px;
+				font-size: 0.9rem;
+				transition: all 0.2s ease;
+			}
+
+			.comment-form {
+				margin-bottom: 2.5rem;
+				padding-bottom: 2rem;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				transition: all 0.3s ease;
+			}
+
+			.comment-form:focus-within {
+				transform: translateY(-5px);
+			}
+
+			.user-avatar {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				object-fit: cover;
+				border: 2px solid rgba(255, 255, 255, 0.1);
+				box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+				transition: all 0.3s ease;
+			}
+
+			.user-avatar:hover {
+				border-color: var(--accent-blue);
+				transform: scale(1.05);
+			}
+
+			.user-avatar-sm {
+				width: 40px;
+				height: 40px;
+			}
+
+			.comment-input {
+				width: 100%;
+				background: rgba(0, 0, 0, 0.2);
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				border-radius: 12px;
+				padding: 1.2rem;
+				color: var(--text-light);
+				resize: none;
+				transition: all 0.3s ease;
+			}
+
+			.comment-input:focus {
+				outline: none;
+				border-color: var(--accent-blue);
+				box-shadow: 0 0 0 3px rgba(79, 116, 200, 0.3);
+			}
+
+			.comment-tools {
+				display: flex;
+				gap: 0.8rem;
+			}
+
+			.btn-tool {
+				background: rgba(46, 66, 114, 0.3);
+				border: none;
+				color: var(--text-muted);
+				padding: 8px;
+				border-radius: 8px;
+				transition: all 0.2s ease;
+			}
+
+			.btn-tool:hover {
+				background: var(--light-blue);
+				color: var(--text-light);
+				transform: translateY(-2px);
+			}
+
+			.btn-post-comment {
+				background: linear-gradient(135deg, var(--accent-blue), #3c5ea9);
+				color: white;
+				border: none;
+				padding: 10px 20px;
+				border-radius: 8px;
+				font-weight: 500;
+				transition: all 0.3s ease;
+				box-shadow: 0 4px 10px rgba(79, 116, 200, 0.3);
+			}
+
+			.btn-post-comment:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 6px 15px rgba(79, 116, 200, 0.4);
+			}
+
+			.comment-item {
+				padding: 1.8rem 0;
+				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+				transition: all 0.3s ease;
+			}
+
+			.commenter-name {
+				margin: 0;
+				font-size: 1.1rem;
+				font-weight: 600;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+
+			.badge-reader {
+				font-size: 0.7rem;
+				background: linear-gradient(90deg, var(--accent-blue), #7e93d5);
+				color: white;
+				padding: 3px 10px;
+				border-radius: 20px;
+				font-weight: 500;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+			}
+
+			.comment-time {
+				font-size: 0.85rem;
+				color: var(--text-muted);
+			}
+
+			.comment-actions {
+				display: flex;
+				gap: 1.2rem;
+				margin-top: 1rem;
+			}
+
+			.btn-action-comment {
+				background: none;
+				border: none;
+				color: var(--text-muted);
+				font-size: 0.9rem;
+				padding: 6px 12px;
+				border-radius: 20px;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				transition: all 0.2s ease;
+			}
+
+			.btn-action-comment:hover {
+				background: rgba(255, 255, 255, 0.1);
+				color: var(--text-light);
+				transform: translateY(-2px);
+			}
+
+			.replies-container {
+				margin-top: 1.5rem;
+				margin-left: 2.5rem;
+				padding-left: 1.5rem;
+				border-left: 2px solid rgba(79, 116, 200, 0.3);
+			}
+
+			.btn-view-replies {
+				background: none;
+				border: none;
+				color: var(--accent-blue);
+				margin-bottom: 1rem;
+				font-size: 0.9rem;
+				transition: all 0.2s ease;
+			}
+
+			.btn-view-replies:hover {
+				color: var(--text-light);
+				transform: translateX(5px);
+			}
+
+			.reply-item {
+				padding: 1rem 0;
+			}
+
+			.btn-load-more {
+				background: var(--light-blue);
+				color: var(--text-light);
+				border: none;
+				padding: 12px 24px;
+				border-radius: 30px;
+				font-weight: 500;
+				transition: all 0.3s ease;
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+			}
+
+			.btn-load-more:hover {
+				background: var(--accent-blue);
+				transform: translateY(-2px);
+				box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+			}
+
+			@media (max-width: 768px) {
+				.comments-container {
+					padding: 1.5rem;
+				}
+
+				.comments-header {
+					flex-direction: column;
+					gap: 1rem;
+				}
+
+				.comment-form .d-flex {
+					flex-direction: column;
+				}
+
+				.comment-actions {
+					flex-wrap: wrap;
+				}
+			}
+
+			.comment-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				padding: 0 1rem;
+				margin-bottom: 0.5rem;
+				position: relative;
+				z-index: 1;
+			}
+
+			.dropdown {
+				position: relative;
+				z-index: 2;
 			}
 		</style>
 	</head>
@@ -613,8 +973,8 @@
 		</main>
 
 		<section>
-			<div class="raw gap-3 d-flex justify-content-between align-items-center p-5">
-				<div class="reading-stats d-block col-6">
+			<div class="raw p-5 d-flex flex-column justify-content-between align-items-center">
+				<div class="reading-stats col-12 mb-3">
 					<div class="stat">
 						<i class="fas fa-clock"></i>
 						<span>Thời gian đọc: 12 phút</span>
@@ -624,17 +984,230 @@
 						<span>Chương 11</span>
 					</div>
 				</div>
-
 				<!-- Chapter Navigation with fixed sizing -->
-				<div class="chapter-navigation col-6">
+				<div class="chapter-navigation col-12">
 					<button class="nav-btn disabled">
 						<i class="fas fa-chevron-left"></i>
-						<span>Chương Trước</span>
+						<span class="d-none d-md-block">Chương Trước</span>
 					</button>
 					<button class="nav-btn">
-						<span>Chương Sau</span>
+						<span class="d-none d-md-block">Chương Sau</span>
 						<i class="fas fa-chevron-right"></i>
 					</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- Comments Section -->
+		<section class="comments-section">
+			<div class="container">
+				<div class="comments-container">
+					<div class="comments-header">
+						<h3><i class="fas fa-comments"></i> Bình luận (24)</h3>
+						<div class="comments-filter">
+							<select class="form-select bg-transparent text-light">
+								<option selected>Mới nhất</option>
+								<option>Phổ biến nhất</option>
+								<option>Cũ nhất</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- Comment Form -->
+					<div class="comment-form">
+						<div class="d-flex gap-3">
+							<img
+								src="https://picsum.photos/seed/user1/50/50"
+								alt="User Avatar"
+								class="user-avatar"
+							/>
+							<div class="flex-grow-1">
+								<textarea
+									class="comment-input"
+									rows="3"
+									placeholder="Viết bình luận của bạn..."
+								></textarea>
+								<div class="d-flex justify-content-between align-items-center mt-2">
+									<div class="comment-tools">
+										<button class="btn-tool" title="Chèn ảnh"><i class="far fa-image"></i></button>
+										<button class="btn-tool" title="Chèn emoji">
+											<i class="far fa-smile"></i>
+										</button>
+										<button class="btn-tool" title="Định dạng"><i class="fas fa-bold"></i></button>
+									</div>
+									<button class="btn-post-comment">Đăng bình luận</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Comments List -->
+					<div class="comments-list">
+						<!-- Comment Item -->
+						<div class="comment-item">
+							<div class="d-flex gap-3">
+								<img
+									src="https://picsum.photos/seed/user2/50/50"
+									alt="User Avatar"
+									class="user-avatar"
+								/>
+								<div class="flex-grow-1">
+									<div class="comment-header">
+										<div class="commenter-info">
+											<h5 class="commenter-name">Mai Trang</h5>
+											<span class="comment-time">35 phút trước</span>
+										</div>
+										<div class="dropdown">
+											<button
+												class="btn-more"
+												type="button"
+												data-bs-toggle="dropdown"
+												aria-expanded="false"
+											>
+												<i class="fas fa-ellipsis-v"></i>
+											</button>
+											<ul class="dropdown-menu dropdown-menu-end bg-dark">
+												<li>
+													<a class="dropdown-item text-light" href="#"
+														><i class="fas fa-flag me-2"></i>Báo cáo</a
+													>
+												</li>
+												<li>
+													<a class="dropdown-item text-light" href="#"
+														><i class="fas fa-user-slash me-2"></i>Chặn người dùng</a
+													>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="comment-content">
+										<p>
+											Đoạn đầu tiên rất hay! Cách miêu tả tâm lý của Alicia khi chứng kiến toàn bộ
+											sự việc thực sự gây ấn tượng mạnh.
+										</p>
+									</div>
+									<div class="comment-actions">
+										<button class="btn-action-comment">
+											<i class="far fa-heart"></i> <span>45</span>
+										</button>
+										<button class="btn-action-comment">
+											<i class="far fa-comment"></i> <span>Trả lời</span>
+										</button>
+										<button class="btn-action-comment">
+											<i class="fas fa-share"></i> <span>Chia sẻ</span>
+										</button>
+									</div>
+
+									<!-- Replies -->
+									<div class="replies-container">
+										<button class="btn-view-replies">
+											<i class="fas fa-chevron-down me-2"></i>Xem 3 phản hồi
+										</button>
+
+										<!-- Reply Item -->
+										<div class="reply-item">
+											<div class="d-flex gap-3">
+												<img
+													src="https://picsum.photos/seed/user3/40/40"
+													alt="User Avatar"
+													class="user-avatar-sm"
+												/>
+												<div class="flex-grow-1">
+													<div class="comment-header">
+														<div class="commenter-info">
+															<h5 class="commenter-name">Hoàng Minh</h5>
+															<span class="comment-time">20 phút trước</span>
+														</div>
+													</div>
+													<div class="comment-content">
+														<p>
+															Tôi nghĩ rằng có điều gì đó đã xảy ra trong quá khứ của họ mà chúng ta
+															chưa biết.
+														</p>
+													</div>
+													<div class="comment-actions">
+														<button class="btn-action-comment">
+															<i class="far fa-heart"></i> <span>12</span>
+														</button>
+														<button class="btn-action-comment">
+															<i class="far fa-comment"></i> <span>Trả lời</span>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Another Comment Item -->
+						<div class="comment-item">
+							<div class="d-flex gap-3">
+								<img
+									src="https://picsum.photos/seed/user4/50/50"
+									alt="User Avatar"
+									class="user-avatar"
+								/>
+								<div class="flex-grow-1">
+									<div class="comment-header">
+										<div class="commenter-info">
+											<h5 class="commenter-name">
+												Thu Hà <span class="badge-reader">Độc giả VIP</span>
+											</h5>
+											<span class="comment-time">2 giờ trước</span>
+										</div>
+										<div class="dropdown">
+											<button
+												class="btn-more"
+												type="button"
+												data-bs-toggle="dropdown"
+												aria-expanded="false"
+											>
+												<i class="fas fa-ellipsis-v"></i>
+											</button>
+											<ul class="dropdown-menu dropdown-menu-end bg-dark">
+												<li>
+													<a class="dropdown-item text-light" href="#"
+														><i class="fas fa-flag me-2"></i>Báo cáo</a
+													>
+												</li>
+												<li>
+													<a class="dropdown-item text-light" href="#"
+														><i class="fas fa-user-slash me-2"></i>Chặn người dùng</a
+													>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="comment-content">
+										<p>
+											Phong cách viết của tác giả thực sự cuốn hút. Những chi tiết nhỏ về ngôi nhà
+											và khung cảnh xung quanh tạo nên không khí rất đặc biệt.
+										</p>
+									</div>
+									<div class="comment-actions">
+										<button class="btn-action-comment">
+											<i class="far fa-heart"></i> <span>28</span>
+										</button>
+										<button class="btn-action-comment">
+											<i class="far fa-comment"></i> <span>Trả lời</span>
+										</button>
+										<button class="btn-action-comment">
+											<i class="fas fa-share"></i> <span>Chia sẻ</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Load More Comments -->
+					<div class="text-center mt-4">
+						<button class="btn-load-more">
+							<i class="fas fa-spinner me-2"></i>Xem thêm bình luận
+						</button>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -725,6 +1298,8 @@
 			</div>
 		</footer>
 		<!-- Scripts -->
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 		<script>
 			// Toggle Settings Panel
 			const settingsToggle = document.getElementById("settingsToggle");
@@ -776,18 +1351,20 @@
 			const decreaseFont = document.getElementById("decreaseFont");
 			const increaseFont = document.getElementById("increaseFont");
 			const currentFontSize = document.getElementById("currentFontSize");
-			let fontSize = 14;
+			let fontSize = 14; // Default size
 
 			decreaseFont.addEventListener("click", () => {
-				if (fontSize > 12) {
-					fontSize -= 2;
+				if (fontSize > 8) {
+					// Changed from 12 to 8 as minimum
+					fontSize -= 1; // Changed from 2 to 1 for finer control
 					updateFontSize();
 				}
 			});
 
 			increaseFont.addEventListener("click", () => {
-				if (fontSize < 18) {
-					fontSize += 2;
+				if (fontSize < 24) {
+					// Changed from 18 to 24 as maximum
+					fontSize += 1; // Changed from 2 to 1 for finer control
 					updateFontSize();
 				}
 			});
@@ -795,6 +1372,10 @@
 			function updateFontSize() {
 				document.documentElement.style.setProperty("--font-size", `${fontSize}px`);
 				currentFontSize.textContent = `${fontSize}px`;
+
+				// Add visual feedback for size limits
+				decreaseFont.classList.toggle("disabled", fontSize <= 8);
+				increaseFont.classList.toggle("disabled", fontSize >= 24);
 
 				// Reset chapter navigation to fixed size
 				const chapterNav = document.querySelector(".chapter-navigation");
@@ -973,6 +1554,47 @@
 
 			readingWidth.addEventListener("input", () => {
 				document.documentElement.style.setProperty("--reading-width", `${readingWidth.value}px`);
+			});
+
+			// Comment Section Functionality
+			document.addEventListener("DOMContentLoaded", function () {
+				// Toggle replies visibility
+				const viewRepliesBtn = document.querySelector(".btn-view-replies");
+				if (viewRepliesBtn) {
+					viewRepliesBtn.addEventListener("click", function () {
+						const replyItems = this.parentElement.querySelectorAll(".reply-item");
+						replyItems.forEach((item) => {
+							if (item.style.display === "none" || !item.style.display) {
+								item.style.display = "block";
+								this.innerHTML = '<i class="fas fa-chevron-up me-2"></i>Ẩn phản hồi';
+							} else {
+								item.style.display = "none";
+								this.innerHTML = '<i class="fas fa-chevron-down me-2"></i>Xem 3 phản hồi';
+							}
+						});
+					});
+				}
+
+				// Like button functionality
+				const likeButtons = document.querySelectorAll(".btn-action-comment i.far.fa-heart");
+				likeButtons.forEach((button) => {
+					button.addEventListener("click", function () {
+						const likeCountElement = this.parentElement.querySelector("span");
+						const currentLikes = parseInt(likeCountElement.innerText);
+
+						if (this.classList.contains("far")) {
+							this.classList.remove("far");
+							this.classList.add("fas");
+							this.style.color = "#e74c3c";
+							likeCountElement.innerText = currentLikes + 1;
+						} else {
+							this.classList.remove("fas");
+							this.classList.add("far");
+							this.style.color = "";
+							likeCountElement.innerText = currentLikes - 1;
+						}
+					});
+				});
 			});
 		</script>
 	</body>
