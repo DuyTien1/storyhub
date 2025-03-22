@@ -46,22 +46,22 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav me-auto">
 						<li class="nav-item">
-							<a class="nav-link active" href="#hero">Trang Chủ</a>
+							<a class="nav-link" href="index.html">Trang Chủ</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#top-books">Truyện Nổi Bật</a>
+							<a class="nav-link" href="index.html#top-books">Truyện Nổi Bật</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#rankings">Xếp Hạng</a>
+							<a class="nav-link" href="index.html#rankings">Xếp Hạng</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#authors">Tác Giả</a>
+							<a class="nav-link" href="index.html#authors">Tác Giả</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#latest-stories">Truyện Mới Nhất</a>
+							<a class="nav-link" href="index.html#latest-stories">Truyện Mới Nhất</a>
 						</li>
 					</ul>
-					<div class="nav-auth-buttons">
+					<div class="nav-auth-buttons text-nowrap">
 						<button
 							class="btn btn-signin me-2"
 							data-bs-toggle="modal"
@@ -69,13 +69,191 @@
 						>
 							Đăng Nhập
 						</button>
-						<button class="btn btn-signup" data-bs-toggle="modal" data-bs-target="#signupModal">
+						<button
+							class="btn btn-signup text-nowrap"
+							data-bs-toggle="modal"
+							data-bs-target="#signupModal"
+						>
 							Đăng Ký
 						</button>
 					</div>
 				</div>
 			</div>
 		</nav>
+
+		<div
+			class="modal fade"
+			id="signinModal"
+			tabindex="-1"
+			aria-labelledby="signinModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0">
+						<h5 class="modal-title" id="signinModalLabel">
+							<i class="fas fa-user-circle me-2"></i>Đăng Nhập
+						</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<div class="social-signin mb-4">
+							<button class="btn btn-social btn-facebook">
+								<i class="fab fa-facebook-f"></i>
+								<span>Facebook</span>
+							</button>
+							<button class="btn btn-social btn-google">
+								<i class="fab fa-google"></i>
+								<span>Google</span>
+							</button>
+						</div>
+						<div class="divider">
+							<span>hoặc đăng nhập với</span>
+						</div>
+						<form id="signinForm" class="mt-4">
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" id="signinEmail" placeholder="Email" />
+								<label for="signinEmail">Email hoặc Tên đăng nhập</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input
+									type="password"
+									class="form-control"
+									id="signinPassword"
+									placeholder="Password"
+								/>
+								<label for="signinPassword">Mật khẩu</label>
+								<button type="button" class="btn-toggle-password">
+									<i class="far fa-eye"></i>
+								</button>
+							</div>
+							<div class="d-flex justify-content-between align-items-center mb-4">
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="rememberMe" />
+									<label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+								</div>
+								<a href="#" class="forgot-password">Quên mật khẩu?</a>
+							</div>
+							<button type="submit" class="btn btn-signin w-100">Đăng Nhập</button>
+						</form>
+						<p class="text-center mt-4">
+							Chưa có tài khoản?
+							<a
+								href="#"
+								class="switch-auth"
+								data-bs-toggle="modal"
+								data-bs-target="#signupModal"
+								data-bs-dismiss="modal"
+								>Đăng ký ngay</a
+							>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Sign Up Modal -->
+		<div
+			class="modal fade"
+			id="signupModal"
+			tabindex="-1"
+			aria-labelledby="signupModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0">
+						<h5 class="modal-title" id="signupModalLabel">
+							<i class="fas fa-user-plus me-2"></i>Đăng Ký Tài Khoản
+						</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<div class="social-signin mb-4">
+							<button class="btn btn-social btn-facebook">
+								<i class="fab fa-facebook-f"></i>
+								<span>Facebook</span>
+							</button>
+							<button class="btn btn-social btn-google">
+								<i class="fab fa-google"></i>
+								<span>Google</span>
+							</button>
+						</div>
+						<div class="divider">
+							<span>hoặc đăng ký với</span>
+						</div>
+						<form id="signupForm" class="mt-4">
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" id="fullName" placeholder="Họ và tên" />
+								<label for="fullName">Họ và tên</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input type="email" class="form-control" id="signupEmail" placeholder="Email" />
+								<label for="signupEmail">Email</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input
+									type="text"
+									class="form-control"
+									id="signupUsername"
+									placeholder="Tên đăng nhập"
+								/>
+								<label for="signupUsername">Tên đăng nhập</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input
+									type="password"
+									class="form-control"
+									id="signupPassword"
+									placeholder="Mật khẩu"
+								/>
+								<label for="signupPassword">Mật khẩu</label>
+								<button type="button" class="btn-toggle-password">
+									<i class="far fa-eye"></i>
+								</button>
+							</div>
+							<div class="password-strength mt-2 mb-3">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar"></div>
+								</div>
+								<small class="form-text"
+									>Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số</small
+								>
+							</div>
+							<div class="form-check mb-4">
+								<input type="checkbox" class="form-check-input" id="termsCheck" required />
+								<label class="form-check-label" for="termsCheck">
+									Tôi đồng ý với <a href="#" class="terms-link">Điều khoản dịch vụ</a> và
+									<a href="#" class="privacy-link">Chính sách bảo mật</a>
+								</label>
+							</div>
+							<button type="submit" class="btn btn-signup w-100">Đăng Ký</button>
+						</form>
+						<p class="text-center mt-4">
+							Đã có tài khoản?
+							<a
+								href="#"
+								class="switch-auth"
+								data-bs-toggle="modal"
+								data-bs-target="#signinModal"
+								data-bs-dismiss="modal"
+								>Đăng nhập</a
+							>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<!-- Phần Giới Thiệu Điều Khoản Dịch Vụ -->
 		<section class="tos-hero">

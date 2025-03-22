@@ -14,804 +14,7 @@
 			rel="stylesheet"
 		/>
 		<link href="assets/css/style.css" rel="stylesheet" />
-		<style>
-			:root {
-				--dark-blue: #0c1a2d;
-				--medium-blue: #1a2c4e;
-				--light-blue: #2e4272;
-				--accent-blue: #4f74c8;
-				--text-light: #e6e6e6;
-				--text-muted: #9aa5b8;
-				--font-size: 14px;
-				--line-height: 1.8;
-				--reading-width: 800px;
-			}
-
-			body {
-				padding-top: 115px;
-				padding-bottom: 1px;
-				background-color: var(--dark-blue);
-				color: var(--text-light);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-			}
-
-			/* Smaller Reading Header */
-			.reading-header {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				background: var(--medium-blue);
-				padding: 8px 0; /* Reduced from 1rem (16px) */
-				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-				z-index: 1000;
-				transition: transform 0.3s ease;
-				height: auto;
-				min-height: 48px; /* Set a specific smaller height */
-			}
-
-			.reading-header.hidden {
-				transform: translateY(-100%);
-			}
-
-			.reading-header .container-fluid {
-				padding-left: 10px;
-				padding-right: 10px;
-			}
-
-			.reading-header .btn-link {
-				padding: 4px 8px;
-				font-size: 14px;
-			}
-
-			.reading-header .book-info h1 {
-				font-size: 1rem; /* Smaller title */
-				margin: 0;
-				font-weight: 600;
-				line-height: 1.2;
-			}
-
-			.reading-header .chapter-info {
-				color: var(--text-muted);
-				font-size: 0.8rem; /* Smaller subtitle */
-				line-height: 1.2;
-			}
-
-			/* Adjust the back button and settings button */
-			.reading-header .col-auto {
-				padding-left: 5px;
-				padding-right: 5px;
-			}
-
-			.reading-header .btn-link i {
-				font-size: 14px;
-			}
-
-			/* Reading Settings */
-			.reading-settings {
-				padding-top: 115px;
-				position: fixed;
-				right: -300px;
-				top: 0;
-				bottom: 0;
-				width: 300px;
-				background: var(--medium-blue);
-				padding: 2rem;
-				box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-				transition: right 0.3s ease;
-				z-index: 1001;
-				overflow-y: auto;
-			}
-
-			.reading-settings.active {
-				right: 0;
-				padding-top: 115px;
-			}
-
-			.settings-group {
-				margin-bottom: 2rem;
-			}
-
-			.settings-group h3 {
-				font-size: 1.1rem;
-				margin-bottom: 1rem;
-				color: var(--text-light);
-			}
-
-			/* Font Size Controls */
-			.font-size-controls {
-				display: flex;
-				align-items: center;
-				gap: 1rem;
-				position: relative;
-			}
-
-			.font-size-btn {
-				background: var(--light-blue);
-				border: none;
-				color: var(--text-light);
-				width: 40px;
-				height: 40px;
-				border-radius: 50%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				cursor: pointer;
-				transition: all 0.2s ease;
-				position: relative;
-			}
-
-			.font-size-btn:hover:not(.disabled) {
-				background: var(--accent-blue);
-				transform: translateY(-2px);
-			}
-
-			.font-size-btn.disabled {
-				opacity: 0.5;
-				cursor: not-allowed;
-				background: var(--dark-blue);
-			}
-
-			.font-size-btn.disabled:hover::after {
-				content: attr(data-limit);
-				position: absolute;
-				bottom: -30px;
-				left: 50%;
-				transform: translateX(-50%);
-				background: rgba(0, 0, 0, 0.8);
-				color: white;
-				padding: 4px 8px;
-				border-radius: 4px;
-				font-size: 12px;
-				white-space: nowrap;
-			}
-
-			#decreaseFont.disabled:hover::after {
-				content: "Kích thước tối thiểu";
-			}
-
-			#increaseFont.disabled:hover::after {
-				content: "Kích thước tối đa";
-			}
-
-			#currentFontSize {
-				min-width: 50px;
-				text-align: center;
-				font-weight: 500;
-				color: var(--text-light);
-				background: rgba(0, 0, 0, 0.2);
-				padding: 4px 8px;
-				border-radius: 4px;
-				transition: all 0.3s ease;
-			}
-
-			/* Theme Selection */
-			.theme-options {
-				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 12px;
-				margin-bottom: 1.5rem;
-			}
-
-			.theme-option {
-				height: 50px;
-				border-radius: 10px;
-				cursor: pointer;
-				border: 2px solid transparent;
-				transition: all 0.3s ease;
-				position: relative;
-				overflow: hidden;
-				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
-			}
-
-			.theme-option::after {
-				content: attr(data-name);
-				position: absolute;
-				bottom: 8px;
-				left: 0;
-				right: 0;
-				text-align: center;
-				font-size: 12px;
-				font-weight: 500;
-				padding: 2px 4px;
-				background-color: rgba(0, 0, 0, 0.5);
-				color: white;
-				opacity: 0;
-				transition: opacity 0.3s ease;
-			}
-
-			.theme-option:hover::after,
-			.theme-option.active::after {
-				opacity: 1;
-			}
-
-			.theme-option.active {
-				border-color: var(--accent-blue);
-				box-shadow: 0 0 15px rgba(79, 116, 200, 0.5);
-				transform: translateY(-3px);
-			}
-
-			/* Theme Styles */
-			.theme-dark {
-				background: linear-gradient(135deg, #0c1a2d, #1a2c4e);
-			}
-
-			.theme-light {
-				background: linear-gradient(135deg, #ffffff, #f0f0f0);
-			}
-
-			.theme-sepia {
-				background: linear-gradient(135deg, #f4ecd8, #e4d5b7);
-			}
-
-			.theme-night {
-				background: linear-gradient(135deg, #000000, #121212);
-			}
-
-			.theme-ocean {
-				background: linear-gradient(135deg, #1a3b5c, #2d6089);
-			}
-
-			.theme-forest {
-				background: linear-gradient(135deg, #1b4d3e, #2d7a5e);
-			}
-
-			.theme-sunset {
-				background: linear-gradient(135deg, #4a2618, #b5441d);
-			}
-
-			.theme-coffee {
-				background: linear-gradient(135deg, #2c1810, #5c341e);
-			}
-
-			.theme-lavender {
-				background: linear-gradient(135deg, #4a3b7c, #6a5aad);
-			}
-
-			.theme-mint {
-				background: linear-gradient(135deg, #d8f4e4, #9fe6c3);
-			}
-
-			.theme-contrast {
-				background: linear-gradient(135deg, #000000, #0a0a0a);
-				border: 2px solid #ffffff;
-			}
-
-			.theme-paper {
-				background: linear-gradient(135deg, #f8f5e6, #e8e0c9);
-			}
-
-			/* Reading Content */
-			.reading-content {
-				max-width: var(--reading-width);
-				margin-top: 70px; /* Adjust this based on new header height */
-				margin: 100px auto 50px;
-				padding: 2rem;
-				background: var(--medium-blue);
-				border-radius: 12px;
-				box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-			}
-
-			.chapter-title {
-				font-size: 2rem;
-				margin-bottom: 2rem;
-				text-align: center;
-			}
-
-			.chapter-content p {
-				margin-bottom: 1.5rem;
-				text-align: justify;
-			}
-
-			/* Chapter Navigation */
-			.chapter-navigation {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				gap: 1rem;
-				padding: 1rem;
-				border-radius: 50px;
-				z-index: 1000;
-				font-size: 14px !important;
-				line-height: 1.5 !important;
-			}
-
-			.nav-btn {
-				background: var(--light-blue);
-				border: none;
-				color: var(--text-light);
-				padding: 8px 16px !important;
-				border-radius: 25px;
-				cursor: pointer;
-				transition: all 0.2s ease;
-				display: flex;
-				align-items: center;
-				gap: 0.5rem;
-				font-size: 14px !important;
-				line-height: 1.5 !important;
-				font-weight: 500 !important;
-				height: auto !important;
-				min-height: 42px !important;
-				box-sizing: border-box !important;
-			}
-
-			.nav-btn i {
-				font-size: 14px !important;
-			}
-
-			.nav-btn:hover {
-				background: var(--accent-blue);
-				transform: translateY(-2px);
-			}
-
-			.nav-btn.disabled {
-				opacity: 0.5;
-				cursor: not-allowed;
-			}
-
-			/* Make sure the buttons stay the same even if font size changes */
-			.chapter-navigation,
-			.nav-btn,
-			.nav-btn i,
-			.nav-btn span {
-				font-size: 14px !important;
-				text-transform: none !important;
-				letter-spacing: normal !important;
-			}
-
-			/* Progress Bar */
-			.progress-container {
-				position: fixed;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 2px; /* Make the progress bar thinner */
-				background: var(--light-blue);
-				z-index: 1002;
-			}
-
-			.progress-bar {
-				height: 100%;
-				background: var(--accent-blue);
-				width: 0;
-				transition: width 0.3s ease;
-			}
-
-			/* Reading Stats */
-			.reading-stats {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				width: auto;
-				left: 2rem;
-				bottom: 2rem;
-				background: var(--medium-blue);
-				padding: 1rem;
-				border-radius: 12px;
-				box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-			}
-
-			.stat {
-				display: flex;
-				justify-content: flex-start;
-				align-items: center;
-				width: 100%;
-				gap: 0.5rem;
-				color: var(--text-muted);
-				font-size: 0.9rem;
-			}
-
-			/* Responsive Design */
-			@media (max-width: 768px) {
-				:root {
-					--reading-width: 100%;
-					--font-size: 16px;
-				}
-
-				.reading-content {
-					padding: 1rem;
-					margin: 50px 1rem 100px;
-				}
-
-				/* .reading-stats {
-					display: none;
-				} */
-			}
-
-			/* Overlay Styles */
-			.settings-overlay {
-				position: fixed;
-				top: 0;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: rgba(0, 0, 0, 0.5);
-				opacity: 0;
-				visibility: hidden;
-				transition: all 0.3s ease;
-				z-index: 1000;
-				backdrop-filter: blur(3px);
-			}
-
-			.settings-overlay.active {
-				opacity: 1;
-				visibility: visible;
-			}
-
-			/* Close Button Styles */
-			.close-settings {
-				position: absolute;
-				right: 50%;
-				bottom: 5%;
-				transform: translateX(50%);
-				background-color: #ff0000;
-				border: none;
-				color: var(--text-light);
-				width: 36px;
-				height: 36px;
-				border-radius: 50%;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				cursor: pointer;
-				transition: all 0.3s ease;
-			}
-
-			.close-settings:hover {
-				opacity: 0.8;
-			}
-
-			.btn-action {
-				font-size: 24px;
-				color: white;
-			}
-
-			/* Animation for Settings Panel */
-			@keyframes slideIn {
-				from {
-					right: -300px;
-					opacity: 0;
-				}
-				to {
-					right: 0;
-					opacity: 1;
-				}
-			}
-
-			@keyframes slideOut {
-				from {
-					right: 0;
-					opacity: 1;
-				}
-				to {
-					right: -300px;
-					opacity: 0;
-				}
-			}
-
-			.reading-settings.active {
-				animation: slideIn 0.3s ease forwards;
-			}
-
-			.reading-settings.closing {
-				animation: slideOut 0.3s ease forwards;
-			}
-
-			/* Comments Section Styles */
-			.comments-section {
-				padding: 3rem 0;
-				position: relative;
-			}
-
-			.comments-section::before {
-				content: "";
-				position: absolute;
-				top: 0;
-				left: 0;
-				right: 0;
-				height: 1px;
-				background: linear-gradient(to right, transparent, var(--accent-blue), transparent);
-				opacity: 0.5;
-			}
-
-			.comments-container {
-				max-width: var(--reading-width);
-				margin: 0 auto;
-				background: var(--medium-blue);
-				border-radius: 16px;
-				padding: 2.5rem;
-				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-				border: 1px solid rgba(255, 255, 255, 0.05);
-			}
-
-			.comments-header {
-				display: flex;
-				justify-content: space-between;
-				align-items: flex-start;
-				margin-bottom: 0.5rem;
-			}
-
-			.commenter-info {
-				display: flex;
-				align-items: center;
-				gap: 12px;
-			}
-
-			.btn-more {
-				background: none;
-				border: none;
-				color: var(--text-muted);
-				padding: 4px 8px;
-				font-size: 14px;
-				transition: all 0.2s ease;
-				border-radius: 4px;
-			}
-
-			.btn-more:hover {
-				color: var(--text-light);
-				background: rgba(255, 255, 255, 0.1);
-			}
-
-			.dropdown-menu {
-				min-width: 180px;
-				padding: 0.5rem;
-				margin: 0;
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				background-color: var(--medium-blue) !important;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-			}
-
-			.dropdown-item {
-				padding: 0.5rem 1rem;
-				border-radius: 6px;
-				color: var(--text-light) !important;
-				transition: all 0.2s ease;
-			}
-
-			.dropdown-item:hover {
-				background: var(--light-blue) !important;
-				transform: translateX(5px);
-			}
-
-			.comments-header h3 {
-				margin: 0;
-				font-size: 1.7rem;
-				font-weight: 600;
-				display: flex;
-				align-items: center;
-				gap: 12px;
-				background: linear-gradient(90deg, var(--text-light), var(--accent-blue));
-				-webkit-background-clip: text;
-				-webkit-text-fill-color: transparent;
-			}
-
-			.comments-filter .form-select {
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				background-color: rgba(0, 0, 0, 0.2);
-				color: var(--text-light);
-				border-radius: 8px;
-				padding: 8px 32px 8px 16px;
-				font-size: 0.9rem;
-				transition: all 0.2s ease;
-			}
-
-			.comment-form {
-				margin-bottom: 2.5rem;
-				padding-bottom: 2rem;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-				transition: all 0.3s ease;
-			}
-
-			.comment-form:focus-within {
-				transform: translateY(-5px);
-			}
-
-			.user-avatar {
-				width: 50px;
-				height: 50px;
-				border-radius: 50%;
-				object-fit: cover;
-				border: 2px solid rgba(255, 255, 255, 0.1);
-				box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-				transition: all 0.3s ease;
-			}
-
-			.user-avatar:hover {
-				border-color: var(--accent-blue);
-				transform: scale(1.05);
-			}
-
-			.user-avatar-sm {
-				width: 40px;
-				height: 40px;
-			}
-
-			.comment-input {
-				width: 100%;
-				background: rgba(0, 0, 0, 0.2);
-				border: 1px solid rgba(255, 255, 255, 0.1);
-				border-radius: 12px;
-				padding: 1.2rem;
-				color: var(--text-light);
-				resize: none;
-				transition: all 0.3s ease;
-			}
-
-			.comment-input:focus {
-				outline: none;
-				border-color: var(--accent-blue);
-				box-shadow: 0 0 0 3px rgba(79, 116, 200, 0.3);
-			}
-
-			.comment-tools {
-				display: flex;
-				gap: 0.8rem;
-			}
-
-			.btn-tool {
-				background: rgba(46, 66, 114, 0.3);
-				border: none;
-				color: var(--text-muted);
-				padding: 8px;
-				border-radius: 8px;
-				transition: all 0.2s ease;
-			}
-
-			.btn-tool:hover {
-				background: var(--light-blue);
-				color: var(--text-light);
-				transform: translateY(-2px);
-			}
-
-			.btn-post-comment {
-				background: linear-gradient(135deg, var(--accent-blue), #3c5ea9);
-				color: white;
-				border: none;
-				padding: 10px 20px;
-				border-radius: 8px;
-				font-weight: 500;
-				transition: all 0.3s ease;
-				box-shadow: 0 4px 10px rgba(79, 116, 200, 0.3);
-			}
-
-			.btn-post-comment:hover {
-				transform: translateY(-2px);
-				box-shadow: 0 6px 15px rgba(79, 116, 200, 0.4);
-			}
-
-			.comment-item {
-				padding: 1.8rem 0;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-				transition: all 0.3s ease;
-			}
-
-			.commenter-name {
-				margin: 0;
-				font-size: 1.1rem;
-				font-weight: 600;
-				display: flex;
-				align-items: center;
-				gap: 8px;
-			}
-
-			.badge-reader {
-				font-size: 0.7rem;
-				background: linear-gradient(90deg, var(--accent-blue), #7e93d5);
-				color: white;
-				padding: 3px 10px;
-				border-radius: 20px;
-				font-weight: 500;
-				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-			}
-
-			.comment-time {
-				font-size: 0.85rem;
-				color: var(--text-muted);
-			}
-
-			.comment-actions {
-				display: flex;
-				gap: 1.2rem;
-				margin-top: 1rem;
-			}
-
-			.btn-action-comment {
-				background: none;
-				border: none;
-				color: var(--text-muted);
-				font-size: 0.9rem;
-				padding: 6px 12px;
-				border-radius: 20px;
-				display: flex;
-				align-items: center;
-				gap: 8px;
-				transition: all 0.2s ease;
-			}
-
-			.btn-action-comment:hover {
-				background: rgba(255, 255, 255, 0.1);
-				color: var(--text-light);
-				transform: translateY(-2px);
-			}
-
-			.replies-container {
-				margin-top: 1.5rem;
-				margin-left: 2.5rem;
-				padding-left: 1.5rem;
-				border-left: 2px solid rgba(79, 116, 200, 0.3);
-			}
-
-			.btn-view-replies {
-				background: none;
-				border: none;
-				color: var(--accent-blue);
-				margin-bottom: 1rem;
-				font-size: 0.9rem;
-				transition: all 0.2s ease;
-			}
-
-			.btn-view-replies:hover {
-				color: var(--text-light);
-				transform: translateX(5px);
-			}
-
-			.reply-item {
-				padding: 1rem 0;
-			}
-
-			.btn-load-more {
-				background: var(--light-blue);
-				color: var(--text-light);
-				border: none;
-				padding: 12px 24px;
-				border-radius: 30px;
-				font-weight: 500;
-				transition: all 0.3s ease;
-				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-			}
-
-			.btn-load-more:hover {
-				background: var(--accent-blue);
-				transform: translateY(-2px);
-				box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-			}
-
-			@media (max-width: 768px) {
-				.comments-container {
-					padding: 1.5rem;
-				}
-
-				.comments-header {
-					flex-direction: column;
-					gap: 1rem;
-				}
-
-				.comment-form .d-flex {
-					flex-direction: column;
-				}
-
-				.comment-actions {
-					flex-wrap: wrap;
-				}
-			}
-
-			.comment-header {
-				display: flex;
-				justify-content: space-between;
-				align-items: flex-start;
-				padding: 0 1rem;
-				margin-bottom: 0.5rem;
-				position: relative;
-				z-index: 1;
-			}
-
-			.dropdown {
-				position: relative;
-				z-index: 2;
-			}
-		</style>
+		<link href="assets/css/reading.css" rel="stylesheet" />
 	</head>
 	<body>
 		<!-- Progress Bar -->
@@ -858,7 +61,7 @@
 							<a class="nav-link" href="index.html#latest-stories">Truyện Mới Nhất</a>
 						</li>
 					</ul>
-					<div class="nav-auth-buttons">
+					<div class="nav-auth-buttons text-nowrap">
 						<button
 							class="btn btn-signin me-2"
 							data-bs-toggle="modal"
@@ -866,7 +69,11 @@
 						>
 							Đăng Nhập
 						</button>
-						<button class="btn btn-signup" data-bs-toggle="modal" data-bs-target="#signupModal">
+						<button
+							class="btn btn-signup text-nowrap"
+							data-bs-toggle="modal"
+							data-bs-target="#signupModal"
+						>
 							Đăng Ký
 						</button>
 					</div>
@@ -1300,302 +507,181 @@
 		<!-- Scripts -->
 		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-		<script>
-			// Toggle Settings Panel
-			const settingsToggle = document.getElementById("settingsToggle");
-			const settingsPanel = document.getElementById("settingsPanel");
-			const closeSettings = document.getElementById("closeSettings");
+		<script src="assets/js/reading.js"></script>
 
-			// Create and add overlay div if it doesn't exist
-			let overlay = document.createElement("div");
-			overlay.className = "settings-overlay";
-			document.body.appendChild(overlay);
+		<!-- Sign In Modal -->
+		<div
+			class="modal fade"
+			id="signinModal"
+			tabindex="-1"
+			aria-labelledby="signinModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0">
+						<h5 class="modal-title" id="signinModalLabel">
+							<i class="fas fa-user-circle me-2"></i>Đăng Nhập
+						</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<div class="social-signin mb-4">
+							<button class="btn btn-social btn-facebook">
+								<i class="fab fa-facebook-f"></i>
+								<span>Facebook</span>
+							</button>
+							<button class="btn btn-social btn-google">
+								<i class="fab fa-google"></i>
+								<span>Google</span>
+							</button>
+						</div>
+						<div class="divider">
+							<span>hoặc đăng nhập với</span>
+						</div>
+						<form id="signinForm" class="mt-4">
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" id="signinEmail" placeholder="Email" />
+								<label for="signinEmail">Email hoặc Tên đăng nhập</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input
+									type="password"
+									class="form-control"
+									id="signinPassword"
+									placeholder="Password"
+								/>
+								<label for="signinPassword">Mật khẩu</label>
+								<button type="button" class="btn-toggle-password">
+									<i class="far fa-eye"></i>
+								</button>
+							</div>
+							<div class="d-flex justify-content-between align-items-center mb-4">
+								<div class="form-check">
+									<input type="checkbox" class="form-check-input" id="rememberMe" />
+									<label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+								</div>
+								<a href="#" class="forgot-password">Quên mật khẩu?</a>
+							</div>
+							<button type="submit" class="btn btn-signin w-100">Đăng Nhập</button>
+						</form>
+						<p class="text-center mt-4">
+							Chưa có tài khoản?
+							<a
+								href="#"
+								class="switch-auth"
+								data-bs-toggle="modal"
+								data-bs-target="#signupModal"
+								data-bs-dismiss="modal"
+								>Đăng ký ngay</a
+							>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
 
-			// Function to open settings
-			const openSettings = () => {
-				settingsPanel.classList.add("active");
-				overlay.classList.add("active");
-				document.body.style.overflow = "hidden"; // Prevent scrolling
-			};
-
-			// Function to close settings
-			const closeSettingsPanel = () => {
-				settingsPanel.classList.remove("active");
-				overlay.classList.remove("active");
-				document.body.style.overflow = ""; // Re-enable scrolling
-			};
-
-			// Toggle settings when clicking the settings button
-			settingsToggle.addEventListener("click", () => {
-				if (settingsPanel.classList.contains("active")) {
-					closeSettingsPanel();
-				} else {
-					openSettings();
-				}
-			});
-
-			// Close settings when clicking the close button
-			closeSettings.addEventListener("click", closeSettingsPanel);
-
-			// Close settings when clicking outside
-			overlay.addEventListener("click", closeSettingsPanel);
-
-			// Close settings when pressing ESC key
-			document.addEventListener("keydown", (e) => {
-				if (e.key === "Escape" && settingsPanel.classList.contains("active")) {
-					closeSettingsPanel();
-				}
-			});
-
-			// Font Size Controls
-			const decreaseFont = document.getElementById("decreaseFont");
-			const increaseFont = document.getElementById("increaseFont");
-			const currentFontSize = document.getElementById("currentFontSize");
-			let fontSize = 14; // Default size
-
-			decreaseFont.addEventListener("click", () => {
-				if (fontSize > 8) {
-					// Changed from 12 to 8 as minimum
-					fontSize -= 1; // Changed from 2 to 1 for finer control
-					updateFontSize();
-				}
-			});
-
-			increaseFont.addEventListener("click", () => {
-				if (fontSize < 24) {
-					// Changed from 18 to 24 as maximum
-					fontSize += 1; // Changed from 2 to 1 for finer control
-					updateFontSize();
-				}
-			});
-
-			function updateFontSize() {
-				document.documentElement.style.setProperty("--font-size", `${fontSize}px`);
-				currentFontSize.textContent = `${fontSize}px`;
-
-				// Add visual feedback for size limits
-				decreaseFont.classList.toggle("disabled", fontSize <= 8);
-				increaseFont.classList.toggle("disabled", fontSize >= 24);
-
-				// Reset chapter navigation to fixed size
-				const chapterNav = document.querySelector(".chapter-navigation");
-				const navButtons = document.querySelectorAll(".nav-btn");
-
-				if (chapterNav) {
-					chapterNav.style.fontSize = "14px";
-				}
-
-				if (navButtons.length) {
-					navButtons.forEach((btn) => {
-						btn.style.fontSize = "14px";
-						const icons = btn.querySelectorAll("i");
-						const spans = btn.querySelectorAll("span");
-
-						icons.forEach((icon) => (icon.style.fontSize = "14px"));
-						spans.forEach((span) => (span.style.fontSize = "14px"));
-					});
-				}
-			}
-
-			// Reading Progress
-			const progressBar = document.getElementById("readingProgress");
-
-			window.addEventListener("scroll", () => {
-				const windowHeight = window.innerHeight;
-				const documentHeight = document.documentElement.scrollHeight - windowHeight;
-				const scrolled = window.scrollY;
-				const progress = (scrolled / documentHeight) * 100;
-				progressBar.style.width = `${progress}%`;
-			});
-
-			// Auto-hide Header
-			let lastScroll = 0;
-			const header = document.querySelector(".reading-header");
-
-			window.addEventListener("scroll", () => {
-				const currentScroll = window.pageYOffset;
-
-				if (currentScroll > lastScroll && currentScroll > 100) {
-					header.classList.add("hidden");
-				} else {
-					header.classList.remove("hidden");
-				}
-
-				lastScroll = currentScroll;
-			});
-
-			// Enhanced Theme Handling
-			const themes = {
-				dark: {
-					darkBg: "#0c1a2d",
-					mediumBg: "#1a2c4e",
-					lightBg: "#2e4272",
-					text: "#e6e6e6",
-					textMuted: "#9aa5b8",
-				},
-				light: {
-					darkBg: "#ffffff",
-					mediumBg: "#f5f5f5",
-					lightBg: "#e9e9e9",
-					text: "#333333",
-					textMuted: "#666666",
-				},
-				sepia: {
-					darkBg: "#f4ecd8",
-					mediumBg: "#e4d5b7",
-					lightBg: "#d8c8a5",
-					text: "#5c4b24",
-					textMuted: "#7a6942",
-				},
-				night: {
-					darkBg: "#000000",
-					mediumBg: "#121212",
-					lightBg: "#1e1e1e",
-					text: "#e0e0e0",
-					textMuted: "#a0a0a0",
-				},
-				ocean: {
-					darkBg: "#1a3b5c",
-					mediumBg: "#2d6089",
-					lightBg: "#3d7ba8",
-					text: "#e6e6e6",
-					textMuted: "#a5c4e0",
-				},
-				forest: {
-					darkBg: "#1b4d3e",
-					mediumBg: "#2d7a5e",
-					lightBg: "#3e9876",
-					text: "#e6e6e6",
-					textMuted: "#a5d8c4",
-				},
-				sunset: {
-					darkBg: "#4a2618",
-					mediumBg: "#b5441d",
-					lightBg: "#e05f2d",
-					text: "#fff1e6",
-					textMuted: "#ffc5a1",
-				},
-				coffee: {
-					darkBg: "#2c1810",
-					mediumBg: "#5c341e",
-					lightBg: "#8c512c",
-					text: "#f5ebe1",
-					textMuted: "#d3b8a0",
-				},
-				lavender: {
-					darkBg: "#4a3b7c",
-					mediumBg: "#6a5aad",
-					lightBg: "#8a78d2",
-					text: "#f2efff",
-					textMuted: "#c9c2e8",
-				},
-				mint: {
-					darkBg: "#d8f4e4",
-					mediumBg: "#9fe6c3",
-					lightBg: "#76d6a8",
-					text: "#2d3e36",
-					textMuted: "#5c7869",
-				},
-				contrast: {
-					darkBg: "#000000",
-					mediumBg: "#0a0a0a",
-					lightBg: "#181818",
-					text: "#ffffff",
-					textMuted: "#dddddd",
-				},
-				paper: {
-					darkBg: "#f8f5e6",
-					mediumBg: "#e8e0c9",
-					lightBg: "#d5c8a8",
-					text: "#463c28",
-					textMuted: "#7d6b49",
-				},
-			};
-
-			// Update theme selection with the new themes
-			const themeOptions = document.querySelectorAll(".theme-option");
-			themeOptions.forEach((option) => {
-				option.addEventListener("click", () => {
-					// Remove active class from all options
-					themeOptions.forEach((opt) => opt.classList.remove("active"));
-
-					// Add active class to selected option
-					option.classList.add("active");
-
-					// Get theme data
-					const theme = option.dataset.theme;
-					const themeColors = themes[theme];
-
-					// Apply theme
-					document.documentElement.style.setProperty("--dark-blue", themeColors.darkBg);
-					document.documentElement.style.setProperty("--medium-blue", themeColors.mediumBg);
-					document.documentElement.style.setProperty("--light-blue", themeColors.lightBg);
-					document.documentElement.style.setProperty("--text-light", themeColors.text);
-					document.documentElement.style.setProperty("--text-muted", themeColors.textMuted);
-
-					// Save the theme preference
-					localStorage.setItem("preferredTheme", theme);
-				});
-			});
-
-			// Load saved theme preference
-			document.addEventListener("DOMContentLoaded", () => {
-				const savedTheme = localStorage.getItem("preferredTheme");
-				if (savedTheme) {
-					const themeToApply = document.querySelector(`.theme-option[data-theme="${savedTheme}"]`);
-					if (themeToApply) {
-						themeToApply.click();
-					}
-				}
-			});
-
-			// Reading Width Control
-			const readingWidth = document.getElementById("readingWidth");
-
-			readingWidth.addEventListener("input", () => {
-				document.documentElement.style.setProperty("--reading-width", `${readingWidth.value}px`);
-			});
-
-			// Comment Section Functionality
-			document.addEventListener("DOMContentLoaded", function () {
-				// Toggle replies visibility
-				const viewRepliesBtn = document.querySelector(".btn-view-replies");
-				if (viewRepliesBtn) {
-					viewRepliesBtn.addEventListener("click", function () {
-						const replyItems = this.parentElement.querySelectorAll(".reply-item");
-						replyItems.forEach((item) => {
-							if (item.style.display === "none" || !item.style.display) {
-								item.style.display = "block";
-								this.innerHTML = '<i class="fas fa-chevron-up me-2"></i>Ẩn phản hồi';
-							} else {
-								item.style.display = "none";
-								this.innerHTML = '<i class="fas fa-chevron-down me-2"></i>Xem 3 phản hồi';
-							}
-						});
-					});
-				}
-
-				// Like button functionality
-				const likeButtons = document.querySelectorAll(".btn-action-comment i.far.fa-heart");
-				likeButtons.forEach((button) => {
-					button.addEventListener("click", function () {
-						const likeCountElement = this.parentElement.querySelector("span");
-						const currentLikes = parseInt(likeCountElement.innerText);
-
-						if (this.classList.contains("far")) {
-							this.classList.remove("far");
-							this.classList.add("fas");
-							this.style.color = "#e74c3c";
-							likeCountElement.innerText = currentLikes + 1;
-						} else {
-							this.classList.remove("fas");
-							this.classList.add("far");
-							this.style.color = "";
-							likeCountElement.innerText = currentLikes - 1;
-						}
-					});
-				});
-			});
-		</script>
+		<!-- Sign Up Modal -->
+		<div
+			class="modal fade"
+			id="signupModal"
+			tabindex="-1"
+			aria-labelledby="signupModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header border-0">
+						<h5 class="modal-title" id="signupModalLabel">
+							<i class="fas fa-user-plus me-2"></i>Đăng Ký Tài Khoản
+						</h5>
+						<button
+							type="button"
+							class="btn-close btn-close-white"
+							data-bs-dismiss="modal"
+							aria-label="Close"
+						></button>
+					</div>
+					<div class="modal-body">
+						<div class="social-signin mb-4">
+							<button class="btn btn-social btn-facebook">
+								<i class="fab fa-facebook-f"></i>
+								<span>Facebook</span>
+							</button>
+							<button class="btn btn-social btn-google">
+								<i class="fab fa-google"></i>
+								<span>Google</span>
+							</button>
+						</div>
+						<div class="divider">
+							<span>hoặc đăng ký với</span>
+						</div>
+						<form id="signupForm" class="mt-4">
+							<div class="form-floating mb-3">
+								<input type="text" class="form-control" id="fullName" placeholder="Họ và tên" />
+								<label for="fullName">Họ và tên</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input type="email" class="form-control" id="signupEmail" placeholder="Email" />
+								<label for="signupEmail">Email</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input
+									type="text"
+									class="form-control"
+									id="signupUsername"
+									placeholder="Tên đăng nhập"
+								/>
+								<label for="signupUsername">Tên đăng nhập</label>
+							</div>
+							<div class="form-floating mb-3">
+								<input
+									type="password"
+									class="form-control"
+									id="signupPassword"
+									placeholder="Mật khẩu"
+								/>
+								<label for="signupPassword">Mật khẩu</label>
+								<button type="button" class="btn-toggle-password">
+									<i class="far fa-eye"></i>
+								</button>
+							</div>
+							<div class="password-strength mt-2 mb-3">
+								<div class="progress">
+									<div class="progress-bar" role="progressbar"></div>
+								</div>
+								<small class="form-text"
+									>Mật khẩu phải chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số</small
+								>
+							</div>
+							<div class="form-check mb-4">
+								<input type="checkbox" class="form-check-input" id="termsCheck" required />
+								<label class="form-check-label" for="termsCheck">
+									Tôi đồng ý với <a href="#" class="terms-link">Điều khoản dịch vụ</a> và
+									<a href="#" class="privacy-link">Chính sách bảo mật</a>
+								</label>
+							</div>
+							<button type="submit" class="btn btn-signup w-100">Đăng Ký</button>
+						</form>
+						<p class="text-center mt-4">
+							Đã có tài khoản?
+							<a
+								href="#"
+								class="switch-auth"
+								data-bs-toggle="modal"
+								data-bs-target="#signinModal"
+								data-bs-dismiss="modal"
+								>Đăng nhập</a
+							>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

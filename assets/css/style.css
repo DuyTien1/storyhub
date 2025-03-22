@@ -14,6 +14,15 @@ body {
 
 :root {
 	--primary-color: linear-gradient(to right, #7bb4ff, #a67ffd);
+	--dark-blue: #0c1a2d;
+	--medium-blue: #1a2c4e;
+	--light-blue: #2e4272;
+	--accent-blue: #4f74c8;
+	--text-light: #e6e6e6;
+	--text-muted: #9aa5b8;
+	--font-size: 14px;
+	--line-height: 1.8;
+	--reading-width: 800px;
 }
 
 /* scrollbar */
@@ -2531,4 +2540,231 @@ section {
 
 .btn-view-all-authors:hover i {
 	transform: translateX(5px);
+}
+
+/* signin signup model */
+
+.modal-content {
+	background: linear-gradient(135deg, var(--medium-blue), rgba(20, 30, 60, 0.95));
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 20px;
+	box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(10px);
+}
+
+.modal-dialog {
+	max-width: 420px;
+}
+
+.modal-header {
+	padding: 1.5rem 1.5rem 0.5rem;
+}
+
+.modal-title {
+	font-size: 1.5rem;
+	font-weight: 600;
+	color: white;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.modal-title i {
+	color: var(--accent-blue);
+	font-size: 1.8rem;
+}
+
+.btn-close {
+	background: rgba(255, 255, 255, 0.1);
+	padding: 0.6rem;
+	border-radius: 50%;
+	transition: all 0.3s ease;
+}
+
+.btn-close:hover {
+	background: rgba(255, 255, 255, 0.2);
+	transform: rotate(90deg);
+}
+
+/* Form Styles */
+.form-floating {
+	position: relative;
+}
+
+.form-floating > .form-control {
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 12px;
+	height: calc(3.5rem + 2px);
+	padding: 1rem 1rem;
+	color: white;
+	font-size: 0.95rem;
+	transition: all 0.3s ease;
+}
+
+.form-floating > label {
+	padding: 1rem;
+	color: rgba(255, 255, 255, 0.6);
+}
+
+.form-floating > .form-control:focus {
+	background: rgba(255, 255, 255, 0.12);
+	border-color: var(--accent-blue);
+	box-shadow: 0 0 0 3px rgba(79, 116, 200, 0.25);
+}
+
+.form-floating > .form-control:focus ~ label {
+	color: var(--accent-blue);
+}
+
+.btn-toggle-password {
+	position: absolute;
+	right: 12px;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	color: rgba(255, 255, 255, 0.5);
+	cursor: pointer;
+	padding: 5px;
+	transition: all 0.2s ease;
+}
+
+.btn-toggle-password:hover {
+	color: white;
+}
+
+/* Social Login */
+.social-signin {
+	display: flex;
+	gap: 12px;
+}
+
+.btn-social {
+	flex: 1;
+	background: white;
+	border: none;
+	padding: 0.8rem;
+	border-radius: 12px;
+	font-weight: 500;
+	font-size: 0.95rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	transition: all 0.3s ease;
+	color: #333;
+}
+
+.btn-facebook {
+	box-shadow: inset 3px 0 0 #1877f2;
+}
+
+.btn-facebook i {
+	color: #1877f2;
+}
+
+.btn-google {
+	box-shadow: inset 3px 0 0 #ea4335;
+}
+
+.btn-google i {
+	color: #ea4335;
+}
+
+.btn-social:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Divider */
+.divider {
+	display: flex;
+	align-items: center;
+	text-align: center;
+	margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+	content: "";
+	flex: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.divider span {
+	padding: 0 1rem;
+	color: rgba(255, 255, 255, 0.5);
+	font-size: 0.9rem;
+}
+
+/* Submit Buttons */
+/* .btn-signin,
+.btn-signup {
+	padding: 0.8rem;
+	border-radius: 12px;
+	font-weight: 600;
+	font-size: 1rem;
+	transition: all 0.3s ease;
+}
+
+.btn-signin {
+	background: linear-gradient(135deg, var(--accent-blue), #3c5ea9);
+	border: none;
+	color: white;
+}
+
+.btn-signup {
+	background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+	border: none;
+	color: white;
+}
+
+.btn-signin:hover,
+.btn-signup:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+	filter: brightness(110%);
+} */
+
+/* Links */
+.forgot-password,
+.switch-auth,
+.terms-link,
+.privacy-link {
+	color: var(--accent-blue);
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.forgot-password:hover,
+.switch-auth:hover,
+.terms-link:hover,
+.privacy-link:hover {
+	color: white;
+	text-decoration: underline;
+}
+
+/* Password Strength */
+.password-strength .progress {
+	height: 4px;
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.password-strength .form-text {
+	color: rgba(255, 255, 255, 0.5);
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+}
+
+/* Animation */
+.modal.fade .modal-dialog {
+	transform: scale(0.95);
+	transition: transform 0.3s ease;
+}
+
+.modal.show .modal-dialog {
+	transform: scale(1);
 }
