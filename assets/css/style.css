@@ -68,6 +68,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .hero-content {
+	padding-top: 5rem;
 	position: relative;
 	z-index: 2;
 	animation: fadeInUp 1s ease-out;
@@ -445,6 +446,10 @@ body::-webkit-scrollbar-thumb {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+	.hero-buttons .btn {
+		font-size: 1rem;
+	}
+
 	.footer-bottom-links {
 		justify-content: center;
 		margin-top: 15px;
@@ -1303,7 +1308,7 @@ body::-webkit-scrollbar-thumb {
 	.update-badge {
 		position: static;
 		display: inline-block;
-		margin-bottom: 8px;
+		/* margin-bottom: 8px; */
 	}
 
 	.story-title {
@@ -1374,6 +1379,7 @@ body::-webkit-scrollbar-thumb {
 /* Story Content Styles */
 .story-status {
 	display: flex;
+	align-items: center;
 	gap: 10px;
 	margin-bottom: 8px;
 }
